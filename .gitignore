@@ -62,3 +62,4 @@ csx/
 
 # Ignore Visual Studio extensions
 *.vsix
+*.vsidx
