@@ -63,3 +63,5 @@ csx/
 # Ignore Visual Studio extensions
 *.vsix
 *.vsidx
+VyssualsConnectorRevit/.vs/Vyssuals Connector Revit/v17/DocumentLayout.json
+VyssualsConnectorRevit/.vs/VyssualsConnectorRevit/v17/DocumentLayout.json
