@@ -4,7 +4,7 @@ using System.Windows.Media.Imaging;
 using Autodesk.Revit.UI;
 
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     public class RibbonMaker
     {

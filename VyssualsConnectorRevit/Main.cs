@@ -9,44 +9,42 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     [Transaction(TransactionMode.Manual)]
-    public class Test : IExternalCommand
+    public class Programm : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            try
-            {
-                //App.RevitVersion = commandData.Application.Application.VersionNumber;
-                App.Doc = commandData.Application.ActiveUIDocument.Document;
-                //App.EventHandler = new ExternalEventHandler();
-                if (!(App.Doc.ActiveView is View3D))
-                {
-                    TaskDialog.Show("Error", "Please select a 3D view or click inside it again.");
-                    return Result.Failed;
-                }
+            string clientUrl = "ws://localhost:8184";
+            string severUrl = "http://localhost:8184/";
 
+            var webSocketManager = new WebSocketManager(clientUrl, severUrl);
+            Task.Run(() => webSocketManager.StartAsync()).Wait();
 
-                // create an instance of RevitElementFilter and log the elements
-                ElementManager elementManager = new ElementManager();
-                elementManager.GatherInitialData();
-                // log elementManager.elements.count
-                Debug.WriteLine($"Elements count: {elementManager.elements.Count}");
-                // log elementManager.parametersInfo
-                //foreach (var item in elementManager.parametersInfo)
-                //{
-                //    Debug.WriteLine($"{item.Key} - {item.Value}");
-                //}
-                return Result.Succeeded;
-            }
-            catch (Exception ex)
+            //App.RevitVersion = commandData.Application.Application.VersionNumber;
+            App.Doc = commandData.Application.ActiveUIDocument.Document;
+            //App.EventHandler = new ExternalEventHandler();
+            if (!(App.Doc.ActiveView is View3D))
             {
-                Debug.WriteLine(ex);
+                TaskDialog.Show("Error", "Please select a 3D view or click inside it again.");
                 return Result.Failed;
             }
+
+            // create an instance of RevitElementFilter and log the elements
+            ElementManager elementManager = new ElementManager();
+            elementManager.GatherInitialData();
+            // log elementManager.elements.count
+            Debug.WriteLine($"Elements count: {elementManager.elements.Count}");
+            // log elementManager.parametersInfo
+            //foreach (var item in elementManager.parametersInfo)
+            //{
+            //    Debug.WriteLine($"{item.Key} - {item.Value}");
+            //}
+            Task.Run(() => webSocketManager.client.SendDataAsync(elementManager.elements));
+
+            TaskDialog.Show("Information", "Click OK to continue.");
+            return Result.Succeeded;
         }
-
-
     }
 }

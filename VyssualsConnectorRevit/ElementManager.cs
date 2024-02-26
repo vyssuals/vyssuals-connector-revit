@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Autodesk.Revit.DB;
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     public class ElementManager
     {

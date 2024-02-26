@@ -7,8 +7,8 @@
     <ProjectGuid>{6C136DA4-FDAB-43FA-9223-A3F1074257FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Vyssuals_Connector_Revit</RootNamespace>
-    <AssemblyName>Vyssuals Connector Revit</AssemblyName>
+    <RootNamespace>Vyssuals.ConnectorRevit</RootNamespace>
+    <AssemblyName>VyssualsConnectorRevit</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -40,6 +40,9 @@
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2024\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Speckle.Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Speckle.Newtonsoft.Json.13.0.2\lib\net45\Speckle.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -58,9 +61,18 @@
     <Compile Include="ElementManager.cs" />
     <Compile Include="RibbonMaker.cs" />
     <Compile Include="VyssualsElement.cs" />
+    <Compile Include="WebSocketClient.cs" />
+    <Compile Include="WebSocketManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\vyssuals-websocket-server\WebsocketServer.csproj">
+      <Project>{2495f31e-4de2-4050-b90d-edca1062fd2f}</Project>
+      <Name>WebsocketServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

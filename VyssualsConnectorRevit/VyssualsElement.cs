@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     public struct VyssualsElement
     {

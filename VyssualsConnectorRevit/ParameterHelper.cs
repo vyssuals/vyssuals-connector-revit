@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     public class ParameterHelper
     {

@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace VyssualsConnectorRevit
+namespace Vyssuals.ConnectorRevit
 {
     public class App : IExternalApplication
     {
