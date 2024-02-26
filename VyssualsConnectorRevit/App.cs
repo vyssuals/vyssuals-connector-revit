@@ -7,7 +7,7 @@ namespace VyssualsConnectorRevit
     public class App : IExternalApplication
     {
         //public static ViewModelDepot ViewModel { get; set; }
-        public static Document CurrentDoc { get; set; }
+        public static Document Doc { get; set; }
         public static string RevitVersion { get; set; }
         //public static DirectusStore Store { get; set; }
 

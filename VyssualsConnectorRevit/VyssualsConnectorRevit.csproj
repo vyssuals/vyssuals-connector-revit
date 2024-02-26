@@ -55,7 +55,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="ParameterHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RevitElementFilter.cs" />
+    <Compile Include="ElementManager.cs" />
     <Compile Include="RibbonMaker.cs" />
     <Compile Include="VyssualsElement.cs" />
   </ItemGroup>
