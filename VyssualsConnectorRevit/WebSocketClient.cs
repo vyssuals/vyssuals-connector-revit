@@ -8,38 +8,61 @@ using Speckle.Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
-{
-
-public class WebSocketClient
-{
-    private ClientWebSocket webSocket = null;
-
-    public async Task<bool> TryConnectAsync(string uri)
+{ 
+    public class WebSocketClient
     {
-        webSocket = new ClientWebSocket();
-        Debug.WriteLine("Connecting to server...");
+        private ClientWebSocket webSocket = null;
 
-        try
+        public async Task<bool> TryConnectAsync(string uri)
         {
-            await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
-            Debug.WriteLine("Connected to server.");
-            return true;
+            webSocket = new ClientWebSocket();
+            Debug.WriteLine("wsClient: Connecting to server...");
+
+            try
+            {
+                await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
+                Debug.WriteLine("wsClient: Connected to server.");
+                return true;
+            }
+            catch (WebSocketException)
+            {
+                Debug.WriteLine("wsClient: Failed to connect to server.");
+                return false;
+            }
         }
-        catch (WebSocketException)
+
+        public async Task SendDataAsync(List<VyssualsElement> data)
         {
-            Debug.WriteLine("ws client: Failed to connect to server.");
-            return false;
+            var json = JsonConvert.SerializeObject(data);
+            var buffer = Encoding.UTF8.GetBytes(json);
+            var segment = new ArraySegment<byte>(buffer);
+
+            try
+            {
+                await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            catch (WebSocketException e)
+            {
+                Debug.WriteLine("wsClient: Failed to send data to server.");
+                Debug.WriteLine(e.Message);
+            }
+        }
+        public async Task DisconnectAsync()
+        {
+            if (webSocket.State == WebSocketState.Open)
+            {
+                try
+                {
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Reit_wsClient: Disconnecting from server", CancellationToken.None);
+                    Debug.WriteLine("wsClient: Disconnected from server.");
+                }
+                catch (WebSocketException e)
+                {
+                    Debug.WriteLine("wsClient: Failed to disconnect from server.");
+                    Debug.WriteLine(e.Message);
+                }
+            }
+            Debug.WriteLine("wsClient: WebSocket state: " + webSocket.State);
         }
     }
-
-    public async Task SendDataAsync(List<VyssualsElement> data)
-    {
-        var json = JsonConvert.SerializeObject(data);
-        var buffer = Encoding.UTF8.GetBytes(json);
-        var segment = new ArraySegment<byte>(buffer);
-
-        await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
-        // Console.WriteLine($"Sent data: {json}");
-    }
-}
 }

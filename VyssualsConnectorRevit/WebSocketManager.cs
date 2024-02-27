@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Vyssuals.ConnectorRevit;
@@ -14,59 +15,53 @@ namespace Vyssuals.ConnectorRevit
         private string serverUrl;
         public WebSocketClient client;
         public WebSocketServer server;
-        private bool isServerRunning = false;
+        private CancellationTokenSource cts = new CancellationTokenSource();
 
         public WebSocketManager(string clientUrl, string serverUrl)
         {
             this.clientUrl = clientUrl;
             this.serverUrl = serverUrl;
             this.client = new WebSocketClient();
+            this.server = null;
+
         }
 
-        public async Task<bool> StartAsync()
+        public async Task StartAsync()
         {
-            try
+            if (await this.client.TryConnectAsync(this.clientUrl)) return;
+
+            Debug.WriteLine("wsManger: Starting the server...");
+            this.server = new WebSocketServer();
+            Task.Run(() => server.RunServerAsync(this.serverUrl, cts.Token));
+
+            bool clientConnected = false;
+            int maxAttempts = 10;
+            int attempts = 1;
+            while (clientConnected == false && attempts <= maxAttempts)
             {
-
-            if (await this.client.TryConnectAsync(this.clientUrl))
-            {
-                Debug.WriteLine("Connected to the server.");
-                return true;
+                Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempts} / {maxAttempts}");
+                clientConnected = await this.client.TryConnectAsync(this.clientUrl);
+                attempts++;
             }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("ws manager: Failed to connect to the server.");
-                Debug.WriteLine(e.Message);
-            }
-
-            Debug.WriteLine("Could not connect to the server. Starting the server...");
-
-
-            // Start the server first if it is not already running
-            if (!this.isServerRunning)
-            {
-                try
-                {
-
-                this.server = new WebSocketServer();
-                await server.RunServerAsync(this.serverUrl); // Use await to wait for the server to start
-                this.isServerRunning = true;
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine("ws manager: Failed to start the server.");
-                    Debug.WriteLine(e.Message);
-                }
-                
-            }
-            return this.isServerRunning;
         }
 
         public void StopServer()
         {
-            this.server?.Stop();
-            this.isServerRunning = false;
+            Debug.WriteLine("wsManger: Stopping the server...");
+            cts.Cancel(); // this will stop the while loop in the server and the method will continue
+        }
+
+        public async Task DisconnectClientAsync()
+        {
+            Debug.WriteLine("wsManger: Disconnecting client from server...");
+            await this.client.DisconnectAsync();
+        }
+
+        public async Task Shutdown()
+        {
+            Debug.WriteLine("wsManger: Shutting down...");
+            await this.DisconnectClientAsync();
+            this.StopServer();
         }
     }
 

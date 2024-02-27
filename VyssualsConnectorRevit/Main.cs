@@ -18,22 +18,11 @@ namespace Vyssuals.ConnectorRevit
         {
             try
             {
-
-
                 Debug.WriteLine("Starting the program...");
                 string clientUrl = "ws://localhost:8184";
                 string severUrl = "http://localhost:8184/";
-
                 var webSocketManager = new WebSocketManager(clientUrl, severUrl);
-                try
-                {
-                    Task.Run(() => webSocketManager.StartAsync());
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine("main: server faile to start");
-                    Debug.WriteLine(e.Message);
-                }
+                Task.Run(() => webSocketManager.StartAsync());
 
                 //App.RevitVersion = commandData.Application.Application.VersionNumber;
                 App.Doc = commandData.Application.ActiveUIDocument.Document;
@@ -68,8 +57,9 @@ namespace Vyssuals.ConnectorRevit
                 //    Task.Run(() => webSocketManager.client.SendDataAsync(elementManager.elements));
                 //}
 
-                //TaskDialog.Show("Information", "Click OK to continue.");
-                //webSocketManager.StopServer();
+                TaskDialog.Show("Information", "Click OK to continue.");
+                Task.Run(() => webSocketManager.Shutdown());
+
                 return Result.Succeeded;
             }
             catch (Exception e)
