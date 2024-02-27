@@ -53,7 +53,7 @@ namespace Vyssuals.ConnectorRevit
             {
                 try
                 {
-                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Reit_wsClient: Disconnecting from server", CancellationToken.None);
+                    await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Revit_wsClient: Disconnecting from server", CancellationToken.None);
                     Debug.WriteLine("wsClient: Disconnected from server.");
                 }
                 catch (WebSocketException e)

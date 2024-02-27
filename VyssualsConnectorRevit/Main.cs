@@ -58,7 +58,7 @@ namespace Vyssuals.ConnectorRevit
                 //}
 
                 TaskDialog.Show("Information", "Click OK to continue.");
-                Task.Run(() => webSocketManager.Shutdown());
+                Task.Run(() => webSocketManager.DisconnectClientAsync());
 
                 return Result.Succeeded;
             }

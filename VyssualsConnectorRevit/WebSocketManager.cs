@@ -23,7 +23,6 @@ namespace Vyssuals.ConnectorRevit
             this.serverUrl = serverUrl;
             this.client = new WebSocketClient();
             this.server = null;
-
         }
 
         public async Task StartAsync()
@@ -32,20 +31,22 @@ namespace Vyssuals.ConnectorRevit
 
             Debug.WriteLine("wsManger: Starting the server...");
             this.server = new WebSocketServer();
-            Task.Run(() => server.RunServerAsync(this.serverUrl, cts.Token));
+            Task.Run(() => this.server.RunServerAsync(this.serverUrl, this.cts.Token));
 
             bool clientConnected = false;
             int maxAttempts = 10;
-            int attempts = 1;
-            while (clientConnected == false && attempts <= maxAttempts)
+            int attempt = 1;
+            while (clientConnected == false && attempt <= maxAttempts)
             {
-                Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempts} / {maxAttempts}");
+                Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempt} / {maxAttempts}");
                 clientConnected = await this.client.TryConnectAsync(this.clientUrl);
-                attempts++;
+                attempt++;
             }
         }
 
         public void StopServer()
+        // this method is not used since we let the server run until the revit is closed
+        // but it shows how to stop the server
         {
             Debug.WriteLine("wsManger: Stopping the server...");
             cts.Cancel(); // this will stop the while loop in the server and the method will continue
@@ -55,13 +56,7 @@ namespace Vyssuals.ConnectorRevit
         {
             Debug.WriteLine("wsManger: Disconnecting client from server...");
             await this.client.DisconnectAsync();
-        }
-
-        public async Task Shutdown()
-        {
-            Debug.WriteLine("wsManger: Shutting down...");
-            await this.DisconnectClientAsync();
-            this.StopServer();
+            this.client = null;
         }
     }
 
