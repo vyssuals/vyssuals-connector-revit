@@ -64,6 +64,7 @@
     <Compile Include="VyssualsElement.cs" />
     <Compile Include="WebSocketClient.cs" />
     <Compile Include="WebSocketManager.cs" />
+    <Compile Include="WebSocketMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
