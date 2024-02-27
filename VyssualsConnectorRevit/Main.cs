@@ -24,7 +24,7 @@ namespace Vyssuals.ConnectorRevit
                 var webSocketManager = new WebSocketManager(clientUrl, severUrl);
                 Task.Run(() => webSocketManager.StartAsync());
 
-                //App.RevitVersion = commandData.Application.Application.VersionNumber;
+                App.RevitVersion = commandData.Application.Application.VersionNumber;
                 App.Doc = commandData.Application.ActiveUIDocument.Document;
                 //App.EventHandler = new ExternalEventHandler();
                 if (!(App.Doc.ActiveView is View3D))

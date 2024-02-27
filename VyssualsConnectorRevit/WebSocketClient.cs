@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
 { 
-    public class WebSocketClient
+public class WebSocketClient
     {
         private ClientWebSocket webSocket = null;
 
@@ -31,10 +31,9 @@ namespace Vyssuals.ConnectorRevit
             }
         }
 
-        public async Task SendDataAsync(List<VyssualsElement> data)
+        public async Task SendDataAsync(string message)
         {
-            var json = JsonConvert.SerializeObject(data);
-            var buffer = Encoding.UTF8.GetBytes(json);
+            var buffer = Encoding.UTF8.GetBytes(message);
             var segment = new ArraySegment<byte>(buffer);
 
             try
@@ -51,6 +50,12 @@ namespace Vyssuals.ConnectorRevit
         {
             if (webSocket.State == WebSocketState.Open)
             {
+                WebSocketMessage message = new WebSocketMessage("disconnect", new Payload());
+
+                var buffer = Encoding.UTF8.GetBytes(message.SerializeToJson());
+                var segment = new ArraySegment<byte>(buffer);
+                await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
+
                 try
                 {
                     await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Revit_wsClient: Disconnecting from server", CancellationToken.None);

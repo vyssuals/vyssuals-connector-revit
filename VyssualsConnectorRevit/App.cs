@@ -1,15 +1,15 @@
 ﻿using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Linq;
 
 namespace Vyssuals.ConnectorRevit
 {
     public class App : IExternalApplication
     {
-        //public static ViewModelDepot ViewModel { get; set; }
         public static Document Doc { get; set; }
         public static string RevitVersion { get; set; }
-        //public static DirectusStore Store { get; set; }
+        public static string DocumentName => GetDocumentName(Doc);
 
         public static ExternalEventHandler EventHandler;
         public Result OnStartup(UIControlledApplication application)
@@ -20,6 +20,19 @@ namespace Vyssuals.ConnectorRevit
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
+        }
+
+        private static string GetDocumentName(Document doc)
+        {
+            // split the path and get the last part
+            string name = doc.PathName.Split('\\').LastOrDefault();
+            // sanitize the name
+            name = name.Replace(".rvt", "");
+            name = name.Replace(".rfa", "");
+            // remove illegal characters
+            name = name.Replace(" ", "-");
+            name = name.Replace(".", "-");
+            return name;
         }
 
     }
