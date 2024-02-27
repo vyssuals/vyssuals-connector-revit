@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Speckle.Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
 {
@@ -16,17 +17,17 @@ public class WebSocketClient
     public async Task<bool> TryConnectAsync(string uri)
     {
         webSocket = new ClientWebSocket();
-        Console.WriteLine("Connecting to server...");
+        Debug.WriteLine("Connecting to server...");
 
         try
         {
             await webSocket.ConnectAsync(new Uri(uri), CancellationToken.None);
-            Console.WriteLine("Connected to server.");
+            Debug.WriteLine("Connected to server.");
             return true;
         }
         catch (WebSocketException)
         {
-            Console.WriteLine("Failed to connect to server.");
+            Debug.WriteLine("ws client: Failed to connect to server.");
             return false;
         }
     }
