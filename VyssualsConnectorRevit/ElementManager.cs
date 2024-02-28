@@ -27,59 +27,49 @@ namespace Vyssuals.ConnectorRevit
 
         private VyssualsElement CreateVyssualsElement(Element elem)
         {
-            // Create a dictionary to store the parameters
             Dictionary<string, object> parameterDictionary = new Dictionary<string, object>();
-            var parameters = elem.ParametersMap;
 
-            if (parameters.Size == 0)
+            var instanceParameters = elem.ParametersMap.Cast<Parameter>()
+                .Where(x => x.StorageType != StorageType.ElementId)
+                .ToList();
+
+            var type = App.Doc.GetElement(elem.GetTypeId());
+            var typeParameters = type.ParametersMap.Cast<Parameter>()
+                .Where(x => x.StorageType != StorageType.ElementId)
+                .ToList();
+
+            if (instanceParameters.Count == 0 && typeParameters.Count == 0)
             {
                 Debug.WriteLine($"No parameters found for element: {elem.Id}");
-                return new VyssualsElement(elem.Id.ToString(), parameterDictionary, 0, 0, 0);
+                return new VyssualsElement(elem.Id.ToString(), parameterDictionary);
             }
 
-            // Iterate over each parameter in the element
+            AddParametersToDictionary(instanceParameters, parameterDictionary);
+            AddParametersToDictionary(typeParameters, parameterDictionary);
+
+            return new VyssualsElement(elem.Id.ToString(), parameterDictionary);
+        }
+
+        private void AddParametersToDictionary(List<Parameter> parameters, Dictionary<string, object> parameterDictionary)
+        {
             foreach (Parameter param in parameters)
             {
-                //Debug.WriteLine($"Category: {elem.Category.Name} | Id: {elem.Id} | param: {param.Definition.Name}");
-
-                // add the parameter name and type to the dictionary parametersInfo
-                parametersInfo[param.Definition.Name] = param.StorageType.ToString();
-                // Add the parameter name and value to the dictionary
+                parametersInfo[param.Definition.Name] = MapStorageType(param.StorageType);
                 parameterDictionary[param.Definition.Name] = param.AsValueString();
             }
-
-            // do the same for type parameters
-            var type = App.Doc.GetElement(elem.GetTypeId());
-            var typeParameters = type.ParametersMap;
-            foreach (Parameter param in typeParameters)
-            {
-                parametersInfo[param.Definition.Name] = param.StorageType.ToString();
-                parameterDictionary[param.Definition.Name] = param.AsValueString();
-            }
-
-            //decimal _area = (decimal)GetBasicValue(elem, "Area");
-            //decimal _volume = (decimal)GetBasicValue(elem, "Volume");
-            //decimal _length = (decimal)GetBasicValue(elem, "Length");
-
-            return new VyssualsElement(elem.Id.ToString(), parameterDictionary, 0, 0, 0);
         }
 
-        private double GetBasicValue(Element elem, string parameterName)
+        private string MapStorageType(StorageType storageType)
         {
-            Parameter parameter = elem.LookupParameter(parameterName);
-            return ParameterHelper.ToMetricValue(parameter);
-        }
-
-        public void LogElements()
-        {
-            foreach (VyssualsElement element in elements)
+            switch (storageType)
             {
-                Debug.WriteLine($"Element ID: {element.id}");
-                Debug.WriteLine($"Length: {element.length}");
-                Debug.WriteLine($"Area: {element.area}");
-                Debug.WriteLine($"Volume: {element.volume}");
+                case StorageType.Double:
+                    return "number";
+                case StorageType.Integer:
+                    return "number";
+                default:
+                    return "string";
             }
         }
-
     }
 }
