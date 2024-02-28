@@ -4,12 +4,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Speckle.Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
-{ 
-public class WebSocketClient
+{
+    public class WebSocketClient
     {
         private ClientWebSocket webSocket = null;
 
@@ -31,10 +30,11 @@ public class WebSocketClient
             }
         }
 
-        public async Task SendDataAsync(string message)
+        public async Task SendDataAsync(WebSocketMessage message)
         {
-            var buffer = Encoding.UTF8.GetBytes(message);
-            var segment = new ArraySegment<byte>(buffer);
+            var segment = new ArraySegment<byte>(
+                Encoding.UTF8.GetBytes(message.SerializeToJson())
+                );
 
             try
             {

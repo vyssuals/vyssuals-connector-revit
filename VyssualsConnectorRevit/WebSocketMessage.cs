@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Speckle.Newtonsoft.Json;
+using System.Text.Json;
+using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
 {
@@ -30,7 +31,7 @@ namespace Vyssuals.ConnectorRevit
 
         public string SerializeToJson()
         {
-            return JsonConvert.SerializeObject(this);
+            return JsonSerializer.Serialize(this);
         }
     }
 
