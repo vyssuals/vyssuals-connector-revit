@@ -64,10 +64,10 @@ namespace Vyssuals.ConnectorRevit
         {
             foreach (VyssualsElement element in elements)
             {
-                Debug.WriteLine($"Element ID: {element.Id}");
-                Debug.WriteLine($"Length: {element.Length}");
-                Debug.WriteLine($"Area: {element.Area}");
-                Debug.WriteLine($"Volume: {element.Volume}");
+                Debug.WriteLine($"Element ID: {element.id}");
+                Debug.WriteLine($"Length: {element.length}");
+                Debug.WriteLine($"Area: {element.area}");
+                Debug.WriteLine($"Volume: {element.volume}");
             }
         }
 

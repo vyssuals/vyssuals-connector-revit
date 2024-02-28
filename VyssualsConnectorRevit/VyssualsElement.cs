@@ -8,11 +8,11 @@ namespace Vyssuals.ConnectorRevit
 {
     public struct VyssualsElement
     {
-        public string Id;
-        public decimal Length;
-        public decimal Area;
-        public decimal Volume;
-        public Dictionary<string, object> Attributes;
+        public string id;
+        public decimal length;
+        public decimal area;
+        public decimal volume;
+        public Dictionary<string, object> attributes;
 
         public VyssualsElement(string id,
             Dictionary<string, object> attributes,
@@ -20,11 +20,11 @@ namespace Vyssuals.ConnectorRevit
             decimal area = 0,
             decimal volume = 0)
         {
-            this.Id = id;
-            this.Length = length;
-            this.Area = area;
-            this.Volume = volume;
-            this.Attributes = attributes;
+            this.id = id;
+            this.length = length;
+            this.area = area;
+            this.volume = volume;
+            this.attributes = attributes;
         }
     }
 }
