@@ -21,6 +21,7 @@ namespace Vyssuals.ConnectorRevit
                  .Where(x => (x.Category != null) && x.GetTypeId() != null)
                  .Select(elem => CreateVyssualsElement(elem))
                  .ToList();
+            Debug.WriteLine($"Gathered {elements.Count} elements.");
         }
 
 

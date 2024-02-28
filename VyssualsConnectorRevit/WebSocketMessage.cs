@@ -8,6 +8,7 @@ using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
 {
+    [Serializable]
     public class WebSocketMessage
     {
         public string type { get; set; }
@@ -35,9 +36,10 @@ namespace Vyssuals.ConnectorRevit
         }
     }
 
+    [Serializable]
     public class Payload
     {
-        public VyssualsElement[] data { get; set; }
+        public List<VyssualsElement> data { get; set; }
         public Dictionary<string, string> metadata { get; set; }
     }
 }

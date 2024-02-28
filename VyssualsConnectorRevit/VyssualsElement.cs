@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Vyssuals.ConnectorRevit
 {
+    [Serializable]
     public struct VyssualsElement
     {
-        public string id;
-        public decimal length;
-        public decimal area;
-        public decimal volume;
-        public Dictionary<string, object> attributes;
+        public string id { get; set; }
+        public decimal length { get; set; }
+        public decimal area { get; set; }
+        public decimal volume { get; set; }
+        public Dictionary<string, object> attributes { get; set; }
 
         public VyssualsElement(string id,
             Dictionary<string, object> attributes,

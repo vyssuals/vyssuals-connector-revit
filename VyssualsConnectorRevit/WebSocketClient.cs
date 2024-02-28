@@ -11,6 +11,13 @@ namespace Vyssuals.ConnectorRevit
     public class WebSocketClient
     {
         private ClientWebSocket webSocket = null;
+        public bool IsConnected
+        {
+            get
+            {
+                return webSocket.State == WebSocketState.Open;
+            }
+        }
 
         public async Task<bool> TryConnectAsync(string uri)
         {
@@ -30,7 +37,7 @@ namespace Vyssuals.ConnectorRevit
             }
         }
 
-        public async Task SendDataAsync(WebSocketMessage message)
+        public async Task SendAsync(WebSocketMessage message)
         {
             var segment = new ArraySegment<byte>(
                 Encoding.UTF8.GetBytes(message.SerializeToJson())
@@ -38,11 +45,12 @@ namespace Vyssuals.ConnectorRevit
 
             try
             {
+                Debug.WriteLine("wsClient: Sending message to server...");
                 await webSocket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
             }
             catch (WebSocketException e)
             {
-                Debug.WriteLine("wsClient: Failed to send data to server.");
+                Debug.WriteLine("wsClient: Failed to send message to server.");
                 Debug.WriteLine(e.Message);
             }
         }

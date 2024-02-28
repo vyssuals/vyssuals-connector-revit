@@ -37,29 +37,15 @@ namespace Vyssuals.ConnectorRevit
                     return Result.Failed;
                 }
 
-                // create an instance of RevitElementFilter and log the elements
-                ElementManager elementManager = new ElementManager();
+                var elementManager = new ElementManager();
                 elementManager.GatherInitialData();
-                Debug.WriteLine($"Elements count: {elementManager.elements.Count}");
 
-                //if (serverStarted)
-                //{
-                //    try
-                //    {
-                //        Task.Run(() => webSocketManager.client.SendDataAsync(elementManager.elements));
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        Debug.WriteLine("main: Failed to send data to the server.");
-                //        Debug.WriteLine(e.Message);
-                //    }
-                //}
-                //else
-                //{
-                //    // wait and try again
-                //    Task.Delay(3000);
-                //    Task.Run(() => webSocketManager.client.SendDataAsync(elementManager.elements));
-                //}
+                var payload = new Payload
+                {
+                    data = elementManager.elements,
+                    metadata = elementManager.parametersInfo
+                };
+                Task.Run(() => webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
 
                 TaskDialog.Show("Information", "Click OK to continue.");
                 Task.Run(() => webSocketManager.DisconnectClientAsync());
