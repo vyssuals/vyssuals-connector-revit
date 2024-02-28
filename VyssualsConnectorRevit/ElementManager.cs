@@ -48,6 +48,15 @@ namespace Vyssuals.ConnectorRevit
                 parameterDictionary[param.Definition.Name] = param.AsValueString();
             }
 
+            // do the same for type parameters
+            var type = App.Doc.GetElement(elem.GetTypeId());
+            var typeParameters = type.ParametersMap;
+            foreach (Parameter param in typeParameters)
+            {
+                parametersInfo[param.Definition.Name] = param.StorageType.ToString();
+                parameterDictionary[param.Definition.Name] = param.AsValueString();
+            }
+
             //decimal _area = (decimal)GetBasicValue(elem, "Area");
             //decimal _volume = (decimal)GetBasicValue(elem, "Volume");
             //decimal _length = (decimal)GetBasicValue(elem, "Length");
