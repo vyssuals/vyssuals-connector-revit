@@ -48,5 +48,10 @@ namespace Vyssuals.ConnectorRevit
             };
             Task.Run(() => webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
         }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
