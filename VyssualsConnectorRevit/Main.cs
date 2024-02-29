@@ -22,34 +22,19 @@ namespace Vyssuals.ConnectorRevit
             {
                 Debug.WriteLine("Starting the program...");
 
-                string clientUrl = "ws://localhost:8184";
-                string severUrl = "http://localhost:8184/";
-                var webSocketManager = new WebSocketManager(clientUrl, severUrl);
-                Task.Run(() => webSocketManager.StartAsync());
-
                 App.RevitVersion = commandData.Application.Application.VersionNumber;
                 App.Doc = commandData.Application.ActiveUIDocument.Document;
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-                //App.EventHandler = new ExternalEventHandler();
+                App.EventHandler = new ExternalEventHandler();
                 if (!(App.Doc.ActiveView is View3D))
                 {
                     TaskDialog.Show("Error", "Please select a 3D view or click inside it again.");
                     return Result.Failed;
                 }
 
-                var elementManager = new ElementManager();
-                elementManager.GatherInitialData();
-
-
-                var payload = new Payload
-                {
-                    data = elementManager.elements,
-                    metadata = elementManager.headerData
-                };
-                Task.Run(() => webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
-
-                TaskDialog.Show("Information", "Click OK to continue.");
-                Task.Run(() => webSocketManager.DisconnectClientAsync());
+                VyssualsControl vyssualsControl = new VyssualsControl();
+                vyssualsControl.Topmost = true;
+                vyssualsControl.Show();
 
                 return Result.Succeeded;
             }
