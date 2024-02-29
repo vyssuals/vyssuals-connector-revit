@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Autodesk.Revit.DB;
 
@@ -11,6 +12,9 @@ namespace Vyssuals.ConnectorRevit
         // public property to store the parameter names and their types in a dictionary
         public Dictionary<string, string> parametersInfo = new Dictionary<string, string>();
         public List<VyssualsElement> elements;
+        public List<HeaderData> headerData = new List<HeaderData>();
+        // add a set to keep track of unique parameter names
+        public HashSet<string> uniqueParameterNames = new HashSet<string>();
 
         public void GatherInitialData()
         {
@@ -44,19 +48,69 @@ namespace Vyssuals.ConnectorRevit
                 return new VyssualsElement(elem.Id.ToString(), parameterDictionary);
             }
 
-            AddParametersToDictionary(instanceParameters, parameterDictionary);
-            AddParametersToDictionary(typeParameters, parameterDictionary);
+            ProcessParameters(instanceParameters, parameterDictionary);
+            ProcessParameters(typeParameters, parameterDictionary);
 
             return new VyssualsElement(elem.Id.ToString(), parameterDictionary);
         }
 
-        private void AddParametersToDictionary(List<Parameter> parameters, Dictionary<string, object> parameterDictionary)
+        private void ProcessParameters(List<Parameter> parameters, Dictionary<string, object> parameterDictionary)
         {
             foreach (Parameter param in parameters)
             {
                 parametersInfo[param.Definition.Name] = MapStorageType(param.StorageType);
+
+                if (uniqueParameterNames.Contains(param.Definition.Name))
+                {
+                    continue;
+                }
+                uniqueParameterNames.Add(param.Definition.Name);
+
+                this.headerData.Add(new HeaderData
+                {
+                    name = param.Definition.Name,
+                    type = MapStorageType(param.StorageType),
+                    unitSymbol = GetUnitSymbol(param)
+                });
                 parameterDictionary[param.Definition.Name] = param.AsValueString();
             }
+
+        }
+
+        private string GetUnitSymbol(Parameter param)
+        {
+            if (param.StorageType == StorageType.Double)
+            {
+                ForgeTypeId unitTypeId = param.GetUnitTypeId();
+                if (UnitUtils.IsUnit(unitTypeId))
+                {
+
+                    return FormatUnit(UnitUtils.GetTypeCatalogStringForUnit(unitTypeId));
+                }
+            }
+            if (param.StorageType == StorageType.Integer)
+            {
+                return "Integer";
+            }
+            if (param.StorageType == StorageType.String)
+            {
+                return "# Unique Items";
+            }
+
+            return "";
+        }
+
+
+        private string FormatUnit(string unit)
+        {
+           // remove underscore, replace with space. then use title case
+            return ToTitleCase(unit.Replace("_", " "));
+            
+        }
+
+        private string ToTitleCase(string str)
+        {
+            return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str.ToLower());
         }
 
         private string MapStorageType(StorageType storageType)

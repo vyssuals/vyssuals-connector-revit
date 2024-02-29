@@ -40,10 +40,11 @@ namespace Vyssuals.ConnectorRevit
                 var elementManager = new ElementManager();
                 elementManager.GatherInitialData();
 
+
                 var payload = new Payload
                 {
                     data = elementManager.elements,
-                    metadata = elementManager.parametersInfo
+                    metadata = elementManager.headerData
                 };
                 Task.Run(() => webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
 

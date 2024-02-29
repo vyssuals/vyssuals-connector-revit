@@ -40,6 +40,6 @@ namespace Vyssuals.ConnectorRevit
     public class Payload
     {
         public List<VyssualsElement> data { get; set; }
-        public Dictionary<string, string> metadata { get; set; }
+        public List<HeaderData> metadata { get; set; }
     }
 }

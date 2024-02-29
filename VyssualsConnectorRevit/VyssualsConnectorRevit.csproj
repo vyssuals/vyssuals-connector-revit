@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="ExternalEventHandler.cs" />
+    <Compile Include="HeaderData.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ElementManager.cs" />
