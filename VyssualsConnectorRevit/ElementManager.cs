@@ -10,7 +10,6 @@ namespace Vyssuals.ConnectorRevit
     public class ElementManager
     {
         // public property to store the parameter names and their types in a dictionary
-        public Dictionary<string, string> parametersInfo = new Dictionary<string, string>();
         public List<VyssualsElement> elements;
         public List<HeaderData> headerData = new List<HeaderData>();
         // add a set to keep track of unique parameter names
@@ -58,8 +57,8 @@ namespace Vyssuals.ConnectorRevit
         {
             foreach (Parameter param in parameters)
             {
-                parametersInfo[param.Definition.Name] = MapStorageType(param.StorageType);
 
+                parameterDictionary[param.Definition.Name] = GetParameterValue(param);
                 if (uniqueParameterNames.Contains(param.Definition.Name))
                 {
                     continue;
@@ -72,7 +71,6 @@ namespace Vyssuals.ConnectorRevit
                     type = MapStorageType(param.StorageType),
                     unitSymbol = GetUnitSymbol(param)
                 });
-                parameterDictionary[param.Definition.Name] = param.AsValueString();
             }
 
         }
@@ -91,10 +89,6 @@ namespace Vyssuals.ConnectorRevit
             if (param.StorageType == StorageType.Integer)
             {
                 return "Integer";
-            }
-            if (param.StorageType == StorageType.String)
-            {
-                return "# Unique Items";
             }
 
             return "";
@@ -123,6 +117,19 @@ namespace Vyssuals.ConnectorRevit
                     return "number";
                 default:
                     return "string";
+            }
+        }
+
+        private string GetParameterValue(Parameter param)
+        {
+            switch (param.StorageType)
+            {
+                case StorageType.Double:
+                    return param.AsDouble().ToString();
+                case StorageType.Integer:
+                    return param.AsInteger().ToString();
+                default:
+                    return param.AsString();
             }
         }
     }
