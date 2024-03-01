@@ -5,53 +5,24 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Vyssuals.ConnectorRevit"
     mc:Ignorable="d" 
-    Width="200" Height="200"
+    Width="220" Height="200"
     WindowStyle="None" AllowsTransparency="True" Background="Transparent"
     MouseLeftButtonDown="Window_MouseLeftButtonDown">
     
     <Window.Resources>
-        <DropShadowEffect x:Key="ShadowEffect" Color="Red" Direction="0" ShadowDepth="0" BlurRadius="20"/>
-        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+        <DropShadowEffect x:Key="ShadowEffect" Color="LightGray" Direction="0" ShadowDepth="0" BlurRadius="20" Opacity="10"/>
+        <Style x:Key="GradientButtonStyle" TargetType="Button">
             <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="35"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="#f3f2f2e2"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect Color="#0000001f" BlurRadius="10" ShadowDepth="0" Opacity="50"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="GradientButtonStyle" TargetType="Button" BasedOn="{StaticResource RoundedButtonStyle}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" CornerRadius="10">
+                        <Border x:Name="border" CornerRadius="8">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                     <GradientStop Color="#DC0999" Offset="0.0" />
@@ -64,7 +35,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Effect">
                                     <Setter.Value>
-                                        <DropShadowEffect Color="#0000001f" BlurRadius="10" ShadowDepth="0" Opacity="50"/>
+                                        <DropShadowEffect Color="LightGray" BlurRadius="10" ShadowDepth="0" Opacity="50"/>
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
@@ -73,22 +44,52 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Window.Resources>
 
-    <Border Background="Transparent"  Padding="10">
-        <Border Background="White" CornerRadius="10" Effect="{StaticResource ShadowEffect}">
+        <Style x:Key="TransparentButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                                                <Setter Property="FontWeight" Value="Normal"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Border Background="Transparent"  Padding="20">
+        <Border Background="White" CornerRadius="10" Effect="{StaticResource ShadowEffect}" Opacity="50">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Header" HorizontalAlignment="Center" FontSize="20" Grid.Row="1"/>
-                <Button x:Name="stopButton" Content="Stop Plugin" Click="StopPlugin" Style="{StaticResource RoundedButtonStyle}" Grid.Row="3" />
-                <Button x:Name="sendButton" Content="Send Data" Click="SendData" Style="{StaticResource GradientButtonStyle}" Grid.Row="4" />
+                <Label Content="Vyssuals" HorizontalAlignment="Center" FontSize="29" Grid.Row="1" FontWeight="Medium" />
+                <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="4" />
+                <Button x:Name="sendButton" Content="Send Data" Click="SendData" Style="{StaticResource GradientButtonStyle}" Grid.Row="3" />
             </Grid>
         </Border>
     </Border>
