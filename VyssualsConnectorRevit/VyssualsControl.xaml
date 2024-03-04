@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Vyssuals.ConnectorRevit"
     mc:Ignorable="d" 
-    Width="220" Height="200"
+    Width="220" Height="240"
     WindowStyle="None" AllowsTransparency="True" Background="Transparent"
     MouseLeftButtonDown="Window_MouseLeftButtonDown">
     
@@ -74,6 +74,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="SliderToggleButton" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10">
+                            <Grid>
+                                <Rectangle x:Name="SwitchBackground" Fill="Gray" RadiusX="10" RadiusY="10"/>
+                                <Ellipse x:Name="SwitchThumb" Fill="White" Width="20" Height="20" HorizontalAlignment="Left" Margin="2"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="SwitchBackground" Property="Fill" Value="Green"/>
+                                <Setter TargetName="SwitchThumb" Property="HorizontalAlignment" Value="Right"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
 
     </Window.Resources>
     <Border Background="Transparent"  Padding="20">
@@ -85,11 +106,21 @@
                     <RowDefinition Height="4"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Vyssuals" HorizontalAlignment="Center" FontSize="29" Grid.Row="1" FontWeight="Medium" />
-                <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="4" />
                 <Button x:Name="sendButton" Content="Send Data" Click="SendData" Style="{StaticResource GradientButtonStyle}" Grid.Row="3" />
+                <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="4" />
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Auto Sync:" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0"/>
+                    <ToggleButton x:Name="syncButton" Style="{StaticResource SliderToggleButton}" Width="50" Height="25" Checked="SyncButton_Checked" Unchecked="SyncButton_Unchecked" Grid.Column="1" />
+                </Grid>
+
             </Grid>
         </Border>
     </Border>

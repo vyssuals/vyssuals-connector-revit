@@ -15,43 +15,55 @@ using System.Windows.Shapes;
 
 namespace Vyssuals.ConnectorRevit
 {
-    /// <summary>
-    /// Interaction logic for VyssualsControl.xaml
-    /// </summary>
     public partial class VyssualsControl : Window
     {
-        private WebSocketManager webSocketManager;
-        private ElementManager elementManager;
-        public VyssualsControl()
+        private readonly WebSocketManager _webSocketManager;
+        private ElementProcessor _elementProcessor => _elementSynchronizer.ElementProcessor;
+        private ElementSynchronizer _elementSynchronizer;
+        public VyssualsControl(ElementSynchronizer synchronizer)
         {
             InitializeComponent();
 
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
-            this.webSocketManager = new WebSocketManager(clientUrl, severUrl);
-            Task.Run(() => webSocketManager.StartAsync());
-            this.elementManager = new ElementManager();
+            this._elementSynchronizer = synchronizer;
+            this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
+            Task.Run(() => _webSocketManager.StartAsync());
         }
         private void StopPlugin(object sender, RoutedEventArgs e)
         {
-            Task.Run(() => this.webSocketManager.DisconnectClientAsync());
+            Task.Run(() => this._webSocketManager.DisconnectClientAsync());
+            this._elementSynchronizer.DisableSync();
             this.Close(); // Close the window
         }
 
         private void SendData(object sender, RoutedEventArgs e)
         {
-            elementManager.GatherInitialData();
+            this._elementProcessor.CollectElements();
             var payload = new Payload
             {
-                data = elementManager.elements,
-                metadata = elementManager.headerData
+                data = _elementProcessor.Elements.ToList(),
+                metadata = _elementProcessor.headerData
             };
-            Task.Run(() => webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
+            Task.Run(() => _webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
         }
+
+        private void SyncButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // Code to start the ElementSynchronizer
+            _elementSynchronizer.EnableSync();
+        }
+
+        private void SyncButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // Code to stop the ElementSynchronizer
+            _elementSynchronizer.DisableSync();
+        }
+
     }
 }

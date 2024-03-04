@@ -21,19 +21,21 @@ namespace Vyssuals.ConnectorRevit
             try
             {
                 Debug.WriteLine("Starting the program...");
+                App.CommandData = commandData;
 
-                App.RevitVersion = commandData.Application.Application.VersionNumber;
-                App.Doc = commandData.Application.ActiveUIDocument.Document;
                 AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
                 App.EventHandler = new ExternalEventHandler();
+
                 if (!(App.Doc.ActiveView is View3D))
                 {
                     TaskDialog.Show("Error", "Please select a 3D view or click inside it again.");
                     return Result.Failed;
                 }
 
-                VyssualsControl vyssualsControl = new VyssualsControl();
-                vyssualsControl.Topmost = true;
+                VyssualsControl vyssualsControl = new VyssualsControl(new ElementSynchronizer(new ElementProcessor(), App.Doc))
+                {
+                    Topmost = true
+                };
                 vyssualsControl.Show();
 
                 return Result.Succeeded;

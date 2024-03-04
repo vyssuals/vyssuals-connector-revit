@@ -7,8 +7,9 @@ namespace Vyssuals.ConnectorRevit
 {
     public class App : IExternalApplication
     {
-        public static Document Doc { get; set; }
-        public static string RevitVersion { get; set; }
+        public static ExternalCommandData CommandData { get; set; }
+        public static Document Doc => CommandData.Application.ActiveUIDocument.Document;
+        public static  string RevitVersion => CommandData.Application.Application.VersionNumber;
         public static string DocumentName => GetDocumentName(Doc);
 
         public static ExternalEventHandler EventHandler;
