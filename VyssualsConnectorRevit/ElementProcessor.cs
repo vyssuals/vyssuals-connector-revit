@@ -10,79 +10,30 @@ namespace Vyssuals.ConnectorRevit
 {
     public class ElementProcessor
     {
-        private ObservableCollection<VyssualsElement> _elements;
-        public ObservableCollection<VyssualsElement> Elements
-        {
-            get { return _elements; }
-            set
-            {
-                if (_elements != null)
-                {
-                    // Unsubscribe from the old collection's event
-                    _elements.CollectionChanged -= Elements_CollectionChanged;
-                }
+        public List<VyssualsElement> Elements;
 
-                if (_elements != null)
-                {
-                    // Subscribe to the new collection's event
-                    _elements.CollectionChanged += Elements_CollectionChanged;
-                }
-
-                _elements = value;
-            }
-        }
+        public event EventHandler ElementsChanged;
 
         public List<HeaderData> headerData = new List<HeaderData>();
         public HashSet<string> uniqueParameterNames = new HashSet<string>();
-        private readonly FilteredElementCollector _viewCollector = new FilteredElementCollector(App.Doc, App.Doc.ActiveView.Id);
-
-        private void UpdateCollection(Action action)
+        private readonly FilteredElementCollector _viewCollector = new FilteredElementCollector(App.Doc, App.Doc.ActiveView.Id).WhereElementIsNotElementType().WhereElementIsViewIndependent();
+        protected virtual void OnElementsChanged()
         {
-            this.Elements.CollectionChanged -= Elements_CollectionChanged; // Unsubscribe
-            action();
-            this.Elements.CollectionChanged += Elements_CollectionChanged; // Subscribe
-        }
-
-        private void Elements_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            Debug.WriteLine($"Elements changed: {e.Action}");
-
-            if (e.OldItems != null)
-            {
-                Debug.WriteLine($"Old items count: {e.OldItems.Count}");
-            }
-
-            if (e.NewItems != null)
-            {
-                Debug.WriteLine($"New items count: {e.NewItems.Count}");
-            }
+            ElementsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void CollectElements()
         {
             Debug.WriteLine("Collecting elements");
-            var newElements = GetElements(this._viewCollector);
-            UpdateCollection(() =>
-            {
-                this.Elements.Clear();
-                foreach (var element in newElements)
-                {
-                    this.Elements.Add(element);
-                }
-            });
+            this.Elements = GetElements(this._viewCollector);
+            OnElementsChanged();
         }
 
         public void AddElements(ICollection<ElementId> elementIds)
         {
             Debug.WriteLine("Adding elements");
-            var newElements = GetElements(this._viewCollector.IntersectWith(IdCollector(elementIds)));
-            UpdateCollection(() =>
-            {
-                foreach (var element in newElements)
-                {
-                    this.Elements.Add(element);
-                }
-            });
+            this.Elements.AddRange(GetElements(this._viewCollector.IntersectWith(IdCollector(elementIds))));
+            OnElementsChanged();
         }
 
         public void UpdateElements(ICollection<ElementId> elementIds)
@@ -91,42 +42,33 @@ namespace Vyssuals.ConnectorRevit
             List<VyssualsElement> updatedElements = GetElements(this._viewCollector.IntersectWith(IdCollector(elementIds)));
             var updatedElementsDict = updatedElements.ToDictionary(e => e.id, e => e);
 
-            UpdateCollection(() =>
+            for (int i = 0; i < this.Elements.Count; i++)
             {
-                for (int i = 0; i < this.Elements.Count; i++)
+                var element = this.Elements[i];
+                if (updatedElementsDict.ContainsKey(element.id))
                 {
-                    var element = this.Elements[i];
-                    if (updatedElementsDict.ContainsKey(element.id))
-                    {
-                        this.Elements[i] = updatedElementsDict[element.id];
-                    }
+                    this.Elements[i] = updatedElementsDict[element.id];
                 }
-            });
+            }
+            OnElementsChanged();
         }
 
         public void RemoveElements(List<string> elementIds)
         {
             Debug.WriteLine("Removing elements");
-            var elementsToRemove = this.Elements.Where(element => elementIds.Contains(element.id)).ToList();
-            UpdateCollection(() =>
-            {
-                foreach (var element in elementsToRemove)
-                {
-                    this.Elements.Remove(element);
-                }
-            });
+            this.Elements = this.Elements.Where(element => !elementIds.Contains(element.id)).ToList();
+            OnElementsChanged();
         }
 
         private FilteredElementCollector IdCollector(ICollection<ElementId> elementIds)
         {
-            return new FilteredElementCollector(App.Doc, elementIds);
+            return new FilteredElementCollector(App.Doc, elementIds).WhereElementIsNotElementType()
+                .WhereElementIsViewIndependent();
         }
 
         private List<VyssualsElement> GetElements(FilteredElementCollector collector)
         {
-            return new ObservableCollection<VyssualsElement>(collector.WhereElementIsNotElementType()
-                .WhereElementIsViewIndependent()
-                .Where(x => (x.Category != null) && x.GetTypeId() != null)
+            return new List<VyssualsElement>(collector.Where(x => (x.Category != null) && x.GetTypeId() != null)
                 .Select(elem => CreateVyssualsElement(elem)))
                 .ToList();
         }

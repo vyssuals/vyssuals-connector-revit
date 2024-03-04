@@ -110,7 +110,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Vyssuals" HorizontalAlignment="Center" FontSize="29" Grid.Row="1" FontWeight="Medium" />
-                <Button x:Name="sendButton" Content="Send Data" Click="SendData" Style="{StaticResource GradientButtonStyle}" Grid.Row="3" />
+                <Button x:Name="sendButton" Content="Send Data" Click="HandleSendDataClicked" Style="{StaticResource GradientButtonStyle}" Grid.Row="3" />
                 <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="4" />
                 <Grid Grid.Row="5">
                     <Grid.ColumnDefinitions>

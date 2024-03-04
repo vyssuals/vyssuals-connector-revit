@@ -25,6 +25,7 @@ namespace Vyssuals.ConnectorRevit
         private void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
         {
             if (!_syncEnabled) return;
+            Debug.WriteLine("Document changed");
 
             List<ElementId> modifiedElementIds = e.GetModifiedElementIds().ToList();
             if (modifiedElementIds.Count > 0)
@@ -41,26 +42,28 @@ namespace Vyssuals.ConnectorRevit
 
         public void EnableSync()
         {
+            Debug.WriteLine("Enabling sync");
             this.ElementProcessor.CollectElements();
             _syncEnabled = true;
         }
 
         public void DisableSync()
         {
-            this.ElementProcessor.Elements = new ObservableCollection<VyssualsElement>();
+            Debug.WriteLine("Disabling sync");
+            this.ElementProcessor.Elements = null;
             _syncEnabled = false;
         }
 
         public void RemoveElements(List<ElementId> ElementIds)
         {
-            Debug.WriteLine("Removing elements");
+            Debug.WriteLine("Remove elements detected");
 
             this.ElementProcessor.RemoveElements(ElementIds.Select(x => x.ToString()).ToList());
         }
 
         public void UpdateElements(List<ElementId> elementIds)
         {
-            Debug.WriteLine("Updating elements");
+            Debug.WriteLine("Update elements detected");
 
             var added = elementIds.Where(id => !this.ElementProcessor.Elements.Any(x => x.id == id.ToString())).ToList();
             var modified = elementIds.Where(id => this.ElementProcessor.Elements.Any(x => x.id == id.ToString())).ToList();

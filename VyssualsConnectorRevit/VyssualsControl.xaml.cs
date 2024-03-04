@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,18 @@ namespace Vyssuals.ConnectorRevit
             this._elementSynchronizer = synchronizer;
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
             Task.Run(() => _webSocketManager.StartAsync());
+
+            this._elementProcessor.ElementsChanged += (sender, e) =>
+            {
+                Debug.WriteLine("Elements changed, sending data");
+                var payload = new Payload
+                {
+                    data = _elementProcessor.Elements,
+                    metadata = _elementProcessor.headerData
+                };
+                Task.Run(() => _webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
+            };
+
         }
         private void StopPlugin(object sender, RoutedEventArgs e)
         {
@@ -37,15 +50,9 @@ namespace Vyssuals.ConnectorRevit
             this.Close(); // Close the window
         }
 
-        private void SendData(object sender, RoutedEventArgs e)
+        private void HandleSendDataClicked(object sender, RoutedEventArgs e)
         {
             this._elementProcessor.CollectElements();
-            var payload = new Payload
-            {
-                data = _elementProcessor.Elements.ToList(),
-                metadata = _elementProcessor.headerData
-            };
-            Task.Run(() => _webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -55,13 +62,11 @@ namespace Vyssuals.ConnectorRevit
 
         private void SyncButton_Checked(object sender, RoutedEventArgs e)
         {
-            // Code to start the ElementSynchronizer
             _elementSynchronizer.EnableSync();
         }
 
         private void SyncButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            // Code to stop the ElementSynchronizer
             _elementSynchronizer.DisableSync();
         }
 
