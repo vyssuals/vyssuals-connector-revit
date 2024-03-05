@@ -27,7 +27,7 @@ namespace Vyssuals.ConnectorRevit
             this._document.Application.DocumentChanged += OnDocumentChanged;
 
             // Initialize the timer with a debounce interval of 500 milliseconds
-            debounceTimer = new System.Timers.Timer(500);
+            debounceTimer = new System.Timers.Timer(1000);
             debounceTimer.Elapsed += OnDebounceTimerElapsed;
             debounceTimer.AutoReset = false;  // So the timer only triggers once unless reset
         }
