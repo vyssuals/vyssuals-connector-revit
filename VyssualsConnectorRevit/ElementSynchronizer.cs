@@ -4,18 +4,19 @@ using System.Diagnostics;
 using Autodesk.Revit.DB.Events;
 using System.Linq;
 using System;
+using Autodesk.Revit.UI;
 
 namespace Vyssuals.ConnectorRevit
 {
     public class ElementSynchronizer
     {
         public ElementProcessor ElementProcessor;
-        private Document _document;
+        private readonly Document _document;
+        private readonly UIApplication _uiApp = App.UiApp;
         private bool _syncEnabled = false;
 
         public event EventHandler ElementsChanged;
 
-        private System.Timers.Timer debounceTimer;
         private HashSet<ElementId> addedElementIds = new HashSet<ElementId>();
         private HashSet<ElementId> modifiedElementIds = new HashSet<ElementId>();
         private HashSet<ElementId> deletedElementIds = new HashSet<ElementId>();
@@ -25,11 +26,7 @@ namespace Vyssuals.ConnectorRevit
             this.ElementProcessor = elementProcessor;
             this._document = document;
             this._document.Application.DocumentChanged += OnDocumentChanged;
-
-            // Initialize the timer with a debounce interval of 500 milliseconds
-            debounceTimer = new System.Timers.Timer(1000);
-            debounceTimer.Elapsed += OnDebounceTimerElapsed;
-            debounceTimer.AutoReset = false;  // So the timer only triggers once unless reset
+            this._uiApp.Idling += OnApplicationIdling;
         }
 
         protected virtual void OnElementsChanged()
@@ -46,13 +43,9 @@ namespace Vyssuals.ConnectorRevit
             addedElementIds.UnionWith(e.GetAddedElementIds());
             modifiedElementIds.UnionWith(e.GetModifiedElementIds());
             deletedElementIds.UnionWith(e.GetDeletedElementIds());
-
-            // Reset the timer every time the event is fired
-            debounceTimer.Stop();
-            debounceTimer.Start();
         }
 
-        private void OnDebounceTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void OnApplicationIdling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
         {
             modifiedElementIds.ExceptWith(deletedElementIds);
             modifiedElementIds.ExceptWith(addedElementIds);
@@ -83,9 +76,7 @@ namespace Vyssuals.ConnectorRevit
             {
                 OnElementsChanged();
             }
-            
         }
-
 
         public void EnableSync()
         {
