@@ -15,6 +15,11 @@ namespace Vyssuals.ConnectorRevit
         public HashSet<string> uniqueParameterNames = new HashSet<string>();
         private ElementId _viewId = App.Doc.ActiveView.Id;
 
+        public ICollection<ElementId> GetVisibleElementIds()
+        {
+            return ViewCollector().WhereElementIsViewIndependent().ToElementIds();
+        }
+
         public void CollectElements()
         {
             Debug.WriteLine("Collecting elements");
@@ -30,7 +35,6 @@ namespace Vyssuals.ConnectorRevit
             if (intersectedElementIds.Count > 0)
             {
                 Debug.WriteLine("Intersected elements");
-                intersectedElementIds.ForEach(x => Debug.WriteLine(x));
                 this.Elements.AddRange(GetElements(IdCollector(intersectedElementIds)));
             }
             else

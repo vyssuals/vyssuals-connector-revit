@@ -13,6 +13,7 @@ namespace Vyssuals.ConnectorRevit
         public ElementProcessor ElementProcessor;
         private readonly Document _document;
         private readonly UIApplication _uiApp = App.UiApp;
+        private readonly View _activeView = App.Doc.ActiveView;
         private bool _syncEnabled = false;
 
         public event EventHandler ElementsChanged;
@@ -47,6 +48,15 @@ namespace Vyssuals.ConnectorRevit
 
         private void OnApplicationIdling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
         {
+            if (_activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
+
+            var visibleElementIds = ElementProcessor.GetVisibleElementIds();
+            // get the difference between visible elements and ElementProcessor.Elements. treat all invisible elements as deleted
+            deletedElementIds.UnionWith(ElementProcessor.Elements.Select(x => x.id).Except(visibleElementIds.Select(x => x.ToString())).Select(x => new ElementId(long.Parse(x))));
+
+            // get the difference between visible elements and ElementProcessor.Elements. treat all items in visibleElements that are not in ElementProcessor.Elements as added
+            addedElementIds.UnionWith(visibleElementIds.Except(ElementProcessor.Elements.Select(x => new ElementId(long.Parse(x.id)))));
+
             modifiedElementIds.ExceptWith(deletedElementIds);
             modifiedElementIds.ExceptWith(addedElementIds);
             bool elementsChanged = false;
@@ -81,6 +91,7 @@ namespace Vyssuals.ConnectorRevit
         public void EnableSync()
         {
             Debug.WriteLine("Enabling sync");
+            if (_activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
             this.ElementProcessor.CollectElements();
             _syncEnabled = true;
             OnElementsChanged();
