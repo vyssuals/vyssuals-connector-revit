@@ -11,7 +11,6 @@ namespace Vyssuals.ConnectorRevit
 {
     public class WebSocketManager
     {
-        private string clientUrl;
         private string serverUrl;
         public WebSocketClient client;
         public WebSocketServer server;
@@ -19,15 +18,14 @@ namespace Vyssuals.ConnectorRevit
 
         public WebSocketManager(string clientUrl, string serverUrl)
         {
-            this.clientUrl = clientUrl;
             this.serverUrl = serverUrl;
-            this.client = new WebSocketClient();
+            this.client = new WebSocketClient(clientUrl);
             this.server = null;
         }
 
         public async Task StartAsync()
         {
-            if (await this.client.TryConnectAsync(this.clientUrl)) return;
+            if (await this.client.TryConnectAsync()) return;
 
             Debug.WriteLine("wsManger: Starting the server...");
             this.server = new WebSocketServer();
@@ -39,7 +37,7 @@ namespace Vyssuals.ConnectorRevit
             while (clientConnected == false && attempt <= maxAttempts)
             {
                 Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempt} / {maxAttempts}");
-                clientConnected = await this.client.TryConnectAsync(this.clientUrl);
+                clientConnected = await this.client.TryConnectAsync();
                 attempt++;
             }
         }
@@ -59,15 +57,4 @@ namespace Vyssuals.ConnectorRevit
             this.client = null;
         }
     }
-
-    //private async Task SendDataAsync(WebSocketClient client, CancellationToken cancellationToken)
-    //{
-    //    while (!cancellationToken.IsCancellationRequested)
-    //    {
-    //        //var data = DummyDataGenerator.GenerateDummyData("MyDataSource", 10);
-
-    //        await client.SendDataAsync(data);
-    //        await Task.Delay(TimeSpan.FromSeconds(10), cancellationToken);
-    //    }
-
 }

@@ -31,15 +31,15 @@ namespace Vyssuals.ConnectorRevit
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
             Task.Run(() => _webSocketManager.StartAsync());
 
-            this._elementProcessor.ElementsChanged += (sender, e) =>
+            this._elementSynchronizer.ElementsChanged += (sender, e) =>
             {
-                Debug.WriteLine("Elements changed, sending data");
+                Debug.WriteLine("Sending data");
                 var payload = new Payload
                 {
                     data = _elementProcessor.Elements,
                     metadata = _elementProcessor.headerData
                 };
-                Task.Run(() => _webSocketManager.client.SendAsync(new WebSocketMessage("data", payload)));
+                Task.Run(() => _webSocketManager.client.SendMessageAsync(new WebSocketMessage("data", payload)));
             };
 
         }
@@ -52,7 +52,8 @@ namespace Vyssuals.ConnectorRevit
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
         {
-            this._elementProcessor.CollectElements();
+            this._elementSynchronizer.EnableSync();
+            this._elementSynchronizer.DisableSync();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
