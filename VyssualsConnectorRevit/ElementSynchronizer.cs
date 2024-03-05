@@ -121,7 +121,10 @@ namespace Vyssuals.ConnectorRevit
             Debug.WriteLine("Update elements detected");
 
             var modified = elementIds.Where(id => this.ElementProcessor.Elements.Any(x => x.id == id.ToString())).ToList();
+            var other = elementIds.Except(modified).ToList();
+
             if (modified.Count > 0) { this.ElementProcessor.UpdateElements(modified); }
+            if (other.Count > 0) { this.ElementProcessor.AddElements(other); }
         }
     }
 }

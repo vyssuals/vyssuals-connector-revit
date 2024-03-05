@@ -13,33 +13,38 @@ namespace Vyssuals.ConnectorRevit
         public List<VyssualsElement> Elements = new List<VyssualsElement>();
         public List<HeaderData> headerData = new List<HeaderData>();
         public HashSet<string> uniqueParameterNames = new HashSet<string>();
-        private readonly FilteredElementCollector _viewCollector = new FilteredElementCollector(
-            App.Doc, App.Doc.ActiveView.Id
-            ).WhereElementIsNotElementType().WhereElementIsViewIndependent();
-
+        private ElementId _viewId = App.Doc.ActiveView.Id;
 
         public void CollectElements()
         {
             Debug.WriteLine("Collecting elements");
-            Debug.WriteLine(this.Elements.Count);
-            this.Elements = GetElements(this._viewCollector);
-            Debug.WriteLine(this.Elements.Count);
+            this.Elements = GetElements(ViewCollector());
         }
 
         public void AddElements(ICollection<ElementId> elementIds)
         {
-            Debug.WriteLine("Adding elements");
-            Debug.WriteLine(this.Elements.Count);
-            List<VyssualsElement> newElements = GetElements(this._viewCollector.IntersectWith(IdCollector(elementIds)));
-            this.Elements.AddRange(newElements);
-            Debug.WriteLine(this.Elements.Count);
+            var viewElementIds = ViewCollector().ToElementIds();
+            var idElementIds = IdCollector(elementIds).ToElementIds();
+            var intersectedElementIds = viewElementIds.Intersect(idElementIds).ToList();
+
+            if (intersectedElementIds.Count > 0)
+            {
+                Debug.WriteLine("Intersected elements");
+                intersectedElementIds.ForEach(x => Debug.WriteLine(x));
+                this.Elements.AddRange(GetElements(IdCollector(intersectedElementIds)));
+            }
+            else
+            {
+                Debug.WriteLine("No intersected elements");
+            }
+            Debug.WriteLine($"New element count: {this.Elements.Count}");
         }
 
         public void UpdateElements(ICollection<ElementId> elementIds)
         {
             Debug.WriteLine("Updating elements");
             Debug.WriteLine(this.Elements.Count);
-            List<VyssualsElement> updatedElements = GetElements(this._viewCollector.IntersectWith(IdCollector(elementIds)));
+            List<VyssualsElement> updatedElements = GetElements(ViewCollector().IntersectWith(IdCollector(elementIds)));
             var updatedElementsDict = updatedElements.ToDictionary(e => e.id, e => e);
 
             for (int i = 0; i < this.Elements.Count; i++)
@@ -63,13 +68,17 @@ namespace Vyssuals.ConnectorRevit
 
         private FilteredElementCollector IdCollector(ICollection<ElementId> elementIds)
         {
-            return new FilteredElementCollector(App.Doc, elementIds).WhereElementIsNotElementType()
-                .WhereElementIsViewIndependent();
+            return new FilteredElementCollector(App.Doc, elementIds).WhereElementIsNotElementType();
+                
+        }
+        private FilteredElementCollector ViewCollector()
+        {
+            return new FilteredElementCollector(App.Doc, this._viewId).WhereElementIsNotElementType();
         }
 
         private List<VyssualsElement> GetElements(FilteredElementCollector collector)
         {
-            return new List<VyssualsElement>(collector.Where(x => (x.Category != null) && x.GetTypeId() != null)
+            return new List<VyssualsElement>(collector.WhereElementIsViewIndependent().Where(x => (x.Category != null) && x.GetTypeId() != null)
                 .Select(elem => CreateVyssualsElement(elem)))
                 .ToList();
         }
