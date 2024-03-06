@@ -91,7 +91,7 @@ namespace Vyssuals.ConnectorRevit
         private List<VyssualsElement> GetElements(FilteredElementCollector collector)
         {
             return new List<VyssualsElement>(collector.WhereElementIsViewIndependent()
-                //.WherePasses(excludeCategoryFilter)
+                .WherePasses(excludeCategoryFilter)
                 .Where(x => (x.Category != null ) && x.GetTypeId() != null)
                 .Select(elem => CreateVyssualsElement(elem)))
                 .ToList();
