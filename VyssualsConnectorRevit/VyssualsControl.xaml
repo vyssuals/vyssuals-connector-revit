@@ -40,6 +40,19 @@
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
+                            <DataTrigger Binding="{Binding AllowManualSync, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AllowManualSync, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#DC0999" Offset="0.0" />
+                                            <GradientStop Color="#05ACFF" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -112,7 +125,7 @@
                                 </Trigger.ExitActions>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
-                                <Setter TargetName="border" Property="Background" Value="Gray"/>
+                                <Setter TargetName="border" Property="Background" Value="LightGray"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
