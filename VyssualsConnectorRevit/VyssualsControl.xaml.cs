@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,32 @@ using System.Windows.Shapes;
 
 namespace Vyssuals.ConnectorRevit
 {
-    public partial class VyssualsControl : Window
+    public partial class VyssualsControl : Window, INotifyPropertyChanged
     {
         private readonly WebSocketManager _webSocketManager;
         private ElementProcessor _elementProcessor => ElementSynchronizer.ElementProcessor;
         public ElementSynchronizer ElementSynchronizer;
+
+        private bool _allowManualSync = true;
+        public bool AllowManualSync
+        {
+            get { return _allowManualSync; }
+            set
+            {
+                if (_allowManualSync != value)
+                {
+                    _allowManualSync = value;
+                    OnPropertyChanged(nameof(AllowManualSync));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public VyssualsControl(ElementSynchronizer synchronizer)
         {
             InitializeComponent();
@@ -59,11 +81,17 @@ namespace Vyssuals.ConnectorRevit
         private void SyncButton_Checked(object sender, RoutedEventArgs e)
         {
             ElementSynchronizer.EnableSync();
+            AllowManualSync = false;
         }
 
         private void SyncButton_Unchecked(object sender, RoutedEventArgs e)
         {
             ElementSynchronizer.DisableSync();
+            AllowManualSync = true;
+        }
+        public void OnWebAppClick(object sender, EventArgs e)
+        {
+            Process.Start("http://localhost:5173/");
         }
 
         private void StopPlugin(object sender, RoutedEventArgs e)
