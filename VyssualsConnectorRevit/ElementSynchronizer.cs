@@ -12,9 +12,9 @@ namespace Vyssuals.ConnectorRevit
     {
         public ElementProcessor ElementProcessor;
         private readonly Document _document;
-        private readonly UIApplication _uiApp = App.UiApp;
         private readonly View _activeView = App.Doc.ActiveView;
         private bool _syncEnabled = false;
+        private bool _documentChanged = false;
 
         public event EventHandler ElementsChanged;
 
@@ -27,7 +27,7 @@ namespace Vyssuals.ConnectorRevit
             this.ElementProcessor = elementProcessor;
             this._document = document;
             this._document.Application.DocumentChanged += OnDocumentChanged;
-            this._uiApp.Idling += OnApplicationIdling;
+            App.UiApp.Idling += OnApplicationIdling;
         }
 
         protected virtual void OnElementsChanged()
@@ -35,7 +35,7 @@ namespace Vyssuals.ConnectorRevit
             ElementsChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
+        public void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
         {
             if (!_syncEnabled) return;
             Debug.WriteLine("Document changed");
@@ -44,11 +44,13 @@ namespace Vyssuals.ConnectorRevit
             addedElementIds.UnionWith(e.GetAddedElementIds());
             modifiedElementIds.UnionWith(e.GetModifiedElementIds());
             deletedElementIds.UnionWith(e.GetDeletedElementIds());
+            this._documentChanged = true;
         }
 
-        private void OnApplicationIdling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        public void OnApplicationIdling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
         {
-            if (!_syncEnabled || _activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
+            if (!_syncEnabled || _activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements) || !_documentChanged) return;
+            Debug.WriteLine("Application idling");
 
             var visibleElementIds = ElementProcessor.GetVisibleElementIds();
             // get the difference between visible elements and ElementProcessor.Elements. treat all invisible elements as deleted
@@ -86,6 +88,7 @@ namespace Vyssuals.ConnectorRevit
             {
                 OnElementsChanged();
             }
+            this._documentChanged = false;
         }
 
         public void EnableSync()
@@ -93,7 +96,8 @@ namespace Vyssuals.ConnectorRevit
             Debug.WriteLine("Enabling sync");
             if (_activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
             this.ElementProcessor.CollectElements();
-            _syncEnabled = true;
+            this._documentChanged = false;
+            this._syncEnabled = true;
             OnElementsChanged();
         }
 
@@ -101,7 +105,8 @@ namespace Vyssuals.ConnectorRevit
         {
             Debug.WriteLine("Disabling sync");
             this.ElementProcessor.Elements = null;
-            _syncEnabled = false;
+            this._syncEnabled = false;
+            this._documentChanged = false;
         }
 
         public void AddElements(List<ElementId> elementIds)
@@ -127,6 +132,12 @@ namespace Vyssuals.ConnectorRevit
 
             if (modified.Count > 0) { this.ElementProcessor.UpdateElements(modified); }
             if (other.Count > 0) { this.ElementProcessor.AddElements(other); }
+        }
+
+        public void UnsubscribeFromEvents()
+        {
+            this._document.Application.DocumentChanged -= OnDocumentChanged;
+            App.UiApp.Idling -= OnApplicationIdling;
         }
     }
 }

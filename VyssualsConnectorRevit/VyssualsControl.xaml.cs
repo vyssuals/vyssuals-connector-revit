@@ -19,19 +19,20 @@ namespace Vyssuals.ConnectorRevit
     public partial class VyssualsControl : Window
     {
         private readonly WebSocketManager _webSocketManager;
-        private ElementProcessor _elementProcessor => _elementSynchronizer.ElementProcessor;
-        private ElementSynchronizer _elementSynchronizer;
+        private ElementProcessor _elementProcessor => ElementSynchronizer.ElementProcessor;
+        public ElementSynchronizer ElementSynchronizer;
         public VyssualsControl(ElementSynchronizer synchronizer)
         {
             InitializeComponent();
 
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
-            this._elementSynchronizer = synchronizer;
+            this.ElementSynchronizer = synchronizer;
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
+            this.Closing += VyssualsControl_Closing;
             Task.Run(() => _webSocketManager.StartAsync());
 
-            this._elementSynchronizer.ElementsChanged += (sender, e) =>
+            this.ElementSynchronizer.ElementsChanged += (sender, e) =>
             {
                 Debug.WriteLine("Sending data");
                 var payload = new Payload
@@ -43,17 +44,11 @@ namespace Vyssuals.ConnectorRevit
             };
 
         }
-        private void StopPlugin(object sender, RoutedEventArgs e)
-        {
-            Task.Run(() => this._webSocketManager.DisconnectClientAsync());
-            this._elementSynchronizer.DisableSync();
-            this.Close(); // Close the window
-        }
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
         {
-            this._elementSynchronizer.EnableSync();
-            this._elementSynchronizer.DisableSync();
+            this.ElementSynchronizer.EnableSync();
+            this.ElementSynchronizer.DisableSync();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -63,13 +58,23 @@ namespace Vyssuals.ConnectorRevit
 
         private void SyncButton_Checked(object sender, RoutedEventArgs e)
         {
-            _elementSynchronizer.EnableSync();
+            ElementSynchronizer.EnableSync();
         }
 
         private void SyncButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            _elementSynchronizer.DisableSync();
+            ElementSynchronizer.DisableSync();
         }
 
+        private void StopPlugin(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void VyssualsControl_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.ElementSynchronizer.DisableSync();
+            Task.Run(() => this._webSocketManager.DisconnectClientAsync());
+        }
     }
 }

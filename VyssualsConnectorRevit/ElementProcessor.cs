@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Controls;
 using Autodesk.Revit.DB;
 
 namespace Vyssuals.ConnectorRevit
@@ -15,6 +16,12 @@ namespace Vyssuals.ConnectorRevit
         public HashSet<string> uniqueParameterNames = new HashSet<string>();
         private ElementId _viewId = App.Doc.ActiveView.Id;
         private Document _doc = App.Doc;
+
+        private ElementMulticategoryFilter excludeCategoryFilter = new ElementMulticategoryFilter(new List<BuiltInCategory>
+            {
+                BuiltInCategory.OST_Cameras
+            },
+            true);
 
         public ICollection<ElementId> GetVisibleElementIds()
         {
@@ -83,7 +90,9 @@ namespace Vyssuals.ConnectorRevit
 
         private List<VyssualsElement> GetElements(FilteredElementCollector collector)
         {
-            return new List<VyssualsElement>(collector.WhereElementIsViewIndependent().Where(x => (x.Category != null) && x.GetTypeId() != null)
+            return new List<VyssualsElement>(collector.WhereElementIsViewIndependent()
+                //.WherePasses(excludeCategoryFilter)
+                .Where(x => (x.Category != null ) && x.GetTypeId() != null)
                 .Select(elem => CreateVyssualsElement(elem)))
                 .ToList();
         }

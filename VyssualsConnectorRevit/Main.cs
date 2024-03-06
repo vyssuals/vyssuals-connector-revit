@@ -16,6 +16,9 @@ namespace Vyssuals.ConnectorRevit
     [Transaction(TransactionMode.Manual)]
     public class Programm : IExternalCommand
     {
+        private VyssualsControl _vyssualsControl;
+        private readonly ExternalEventHandler _externalEventHandler = new ExternalEventHandler();
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             try
@@ -32,11 +35,12 @@ namespace Vyssuals.ConnectorRevit
                     return Result.Failed;
                 }
 
-                VyssualsControl vyssualsControl = new VyssualsControl(new ElementSynchronizer(new ElementProcessor(), App.Doc))
+                this._vyssualsControl = new VyssualsControl(new ElementSynchronizer(new ElementProcessor(), App.Doc))
                 {
                     Topmost = true
                 };
-                vyssualsControl.Show();
+                this._vyssualsControl.Closed += VyssualsControl_Closed;
+                this._vyssualsControl.Show();
 
                 return Result.Succeeded;
             }
@@ -47,6 +51,13 @@ namespace Vyssuals.ConnectorRevit
                 return Result.Failed;
             }
         }
+
+        private void VyssualsControl_Closed(object sender, EventArgs e)
+        {
+            _externalEventHandler.Raise(() => this._vyssualsControl.ElementSynchronizer.UnsubscribeFromEvents());
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+        }
+
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
