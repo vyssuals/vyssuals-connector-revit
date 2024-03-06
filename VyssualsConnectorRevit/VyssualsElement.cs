@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Vyssuals.ConnectorRevit
 {
     [Serializable]
-    public struct VyssualsElement
+    public class VyssualsElement
     {
         public string id { get; set; }
         public Dictionary<string, object> attributes { get; set; }

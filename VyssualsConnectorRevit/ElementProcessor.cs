@@ -92,14 +92,17 @@ namespace Vyssuals.ConnectorRevit
         {
             return new List<VyssualsElement>(collector.WhereElementIsViewIndependent()
                 .WherePasses(excludeCategoryFilter)
-                .Where(x => (x.Category != null ) && x.GetTypeId() != null)
-                .Select(elem => CreateVyssualsElement(elem)))
-                .ToList();
+                .Select(elem => CreateVyssualsElement(elem))
+                .Where(x => x != null)
+                .ToList());
         }
 
 
         private VyssualsElement CreateVyssualsElement(Element elem)
         {
+            if (elem == null || elem.Category == null || elem.GetTypeId() == null) return null;
+            if (elem is FamilyInstance familyInstance && familyInstance.SuperComponent != null) return null;
+
             Dictionary<string, object> parameterDictionary = new Dictionary<string, object>();
 
             var instanceParameters = elem.ParametersMap.Cast<Parameter>()
@@ -137,7 +140,7 @@ namespace Vyssuals.ConnectorRevit
         {
             var properties = new Dictionary<string, string>
             {
-                { "Element Name", element.Name },
+                { "Name", element.Name },
                 { "Category", element.Category.Name },
                 { "Level", element.LevelId != ElementId.InvalidElementId ? _doc.GetElement(element.LevelId).Name : "No Level"},
                 { "Workset", element.WorksetId.IntegerValue != 0 ? _doc.GetWorksetTable().GetWorkset(element.WorksetId).Name : "No Workset" },
