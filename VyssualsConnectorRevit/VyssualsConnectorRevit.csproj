@@ -62,7 +62,6 @@
     <Compile Include="ExternalEventHandler.cs" />
     <Compile Include="HeaderData.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="ViewHelper.cs" />
     <Compile Include="VyssualsControl.xaml.cs">
       <DependentUpon>VyssualsControl.xaml</DependentUpon>
     </Compile>

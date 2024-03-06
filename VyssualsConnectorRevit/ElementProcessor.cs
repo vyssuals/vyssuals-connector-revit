@@ -14,6 +14,7 @@ namespace Vyssuals.ConnectorRevit
         public List<HeaderData> headerData = new List<HeaderData>();
         public HashSet<string> uniqueParameterNames = new HashSet<string>();
         private ElementId _viewId = App.Doc.ActiveView.Id;
+        private Document _doc = App.Doc;
 
         public ICollection<ElementId> GetVisibleElementIds()
         {
@@ -97,9 +98,13 @@ namespace Vyssuals.ConnectorRevit
                 .ToList();
 
             var type = App.Doc.GetElement(elem.GetTypeId());
-            var typeParameters = type.ParametersMap.Cast<Parameter>()
+            var typeParameters = new List<Parameter>();
+            if (type != null)
+            {
+                typeParameters = type.ParametersMap.Cast<Parameter>()
                 .Where(x => x.StorageType != StorageType.ElementId)
                 .ToList();
+            }
 
             if (instanceParameters.Count == 0 && typeParameters.Count == 0)
             {
@@ -108,31 +113,55 @@ namespace Vyssuals.ConnectorRevit
             }
 
             ProcessParameters(instanceParameters, parameterDictionary);
-            ProcessParameters(typeParameters, parameterDictionary);
+
+            if (typeParameters.Count > 0)
+            {
+                ProcessParameters(typeParameters, parameterDictionary);
+            }
+
+            ProcessProperties(elem, parameterDictionary);
 
             return new VyssualsElement(elem.Id.ToString(), parameterDictionary);
+        }
+
+        private void ProcessProperties(Element element, Dictionary<string, object> parameterDictionary)
+        {
+            var properties = new Dictionary<string, string>
+            {
+                { "Element Name", element.Name },
+                { "Category", element.Category.Name },
+                { "Level", element.LevelId != ElementId.InvalidElementId ? _doc.GetElement(element.LevelId).Name : "No Level"},
+                { "Workset", element.WorksetId.IntegerValue != 0 ? _doc.GetWorksetTable().GetWorkset(element.WorksetId).Name : "No Workset" },
+                { "DesignOption", element.DesignOption != null ? element.DesignOption.Name : "No Design Option" }
+            };
+
+            foreach (var property in properties)
+            {
+                parameterDictionary[property.Key] = property.Value;
+                AddHeaderData(property.Key, "string", "");
+            }
         }
 
         private void ProcessParameters(List<Parameter> parameters, Dictionary<string, object> parameterDictionary)
         {
             foreach (Parameter param in parameters)
             {
-
                 parameterDictionary[param.Definition.Name] = GetParameterValue(param);
-                if (uniqueParameterNames.Contains(param.Definition.Name))
-                {
-                    continue;
-                }
-                uniqueParameterNames.Add(param.Definition.Name);
-
-                this.headerData.Add(new HeaderData
-                {
-                    name = param.Definition.Name,
-                    type = MapStorageType(param.StorageType),
-                    unitSymbol = GetUnitSymbol(param)
-                });
+                AddHeaderData(param.Definition.Name, MapStorageType(param.StorageType), GetUnitSymbol(param));
             }
 
+        }
+
+        private void AddHeaderData(string name, string type, string unitSymbol)
+        {
+            if (this.uniqueParameterNames.Contains(name)) return;
+            this.headerData.Add(new HeaderData
+            {
+                name = name,
+                type = type,
+                unitSymbol = unitSymbol
+            });
+            this.uniqueParameterNames.Add(name);
         }
 
         private string GetUnitSymbol(Parameter param)

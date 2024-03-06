@@ -48,7 +48,7 @@ namespace Vyssuals.ConnectorRevit
 
         private void OnApplicationIdling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
         {
-            if (_activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
+            if (!_syncEnabled || _activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements)) return;
 
             var visibleElementIds = ElementProcessor.GetVisibleElementIds();
             // get the difference between visible elements and ElementProcessor.Elements. treat all invisible elements as deleted
