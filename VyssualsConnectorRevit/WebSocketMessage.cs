@@ -41,5 +41,6 @@ namespace Vyssuals.ConnectorRevit
     {
         public List<VyssualsElement> data { get; set; }
         public List<HeaderData> metadata { get; set; }
+        public List<string> visibleElements { get; set; }
     }
 }

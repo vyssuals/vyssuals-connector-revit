@@ -20,8 +20,7 @@ namespace Vyssuals.ConnectorRevit
     public partial class VyssualsControl : Window, INotifyPropertyChanged
     {
         private readonly WebSocketManager _webSocketManager;
-        private ElementProcessor _elementProcessor => ElementSynchronizer.ElementProcessor;
-        public ElementSynchronizer ElementSynchronizer;
+        public Synchronizer Synchronizer;
 
         private bool _allowManualSync = true;
         public bool AllowManualSync
@@ -43,24 +42,25 @@ namespace Vyssuals.ConnectorRevit
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public VyssualsControl(ElementSynchronizer synchronizer)
+        public VyssualsControl(Synchronizer synchronizer)
         {
             InitializeComponent();
 
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
-            this.ElementSynchronizer = synchronizer;
+            this.Synchronizer = synchronizer;
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
             this.Closing += VyssualsControl_Closing;
             Task.Run(() => _webSocketManager.StartAsync());
 
-            this.ElementSynchronizer.ElementsChanged += (sender, e) =>
+            this.Synchronizer.ElementsChanged += (sender, e) =>
             {
                 Debug.WriteLine("Sending data");
                 var payload = new Payload
                 {
-                    data = _elementProcessor.Elements,
-                    metadata = _elementProcessor.headerData
+                    data = this.Synchronizer.DataUpdate.Elements,
+                    metadata = this.Synchronizer.DataUpdate.HeaderData,
+                    visibleElements = this.Synchronizer.DataUpdate.VisibleElements
                 };
                 Task.Run(() => _webSocketManager.client.SendMessageAsync(new WebSocketMessage("data", payload)));
             };
@@ -69,8 +69,8 @@ namespace Vyssuals.ConnectorRevit
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
         {
-            this.ElementSynchronizer.EnableSync();
-            this.ElementSynchronizer.DisableSync();
+            this.Synchronizer.EnableSync();
+            this.Synchronizer.DisableSync();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -80,13 +80,13 @@ namespace Vyssuals.ConnectorRevit
 
         private void SyncButton_Checked(object sender, RoutedEventArgs e)
         {
-            ElementSynchronizer.EnableSync();
+            this.Synchronizer.EnableSync();
             AllowManualSync = false;
         }
 
         private void SyncButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            ElementSynchronizer.DisableSync();
+            this.Synchronizer.DisableSync();
             AllowManualSync = true;
         }
         public void OnWebAppClick(object sender, EventArgs e)
@@ -101,7 +101,7 @@ namespace Vyssuals.ConnectorRevit
 
         private void VyssualsControl_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            this.ElementSynchronizer.DisableSync();
+            this.Synchronizer.DisableSync();
             Task.Run(() => this._webSocketManager.DisconnectClientAsync());
         }
     }

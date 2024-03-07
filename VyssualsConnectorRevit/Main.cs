@@ -2,14 +2,10 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Vyssuals.ConnectorRevit
 {
@@ -35,7 +31,7 @@ namespace Vyssuals.ConnectorRevit
                     return Result.Failed;
                 }
 
-                this._vyssualsControl = new VyssualsControl(new ElementSynchronizer(new ElementProcessor(), App.Doc))
+                this._vyssualsControl = new VyssualsControl(new Synchronizer())
                 {
                     Topmost = true
                 };
@@ -54,7 +50,7 @@ namespace Vyssuals.ConnectorRevit
 
         private void VyssualsControl_Closed(object sender, EventArgs e)
         {
-            _externalEventHandler.Raise(() => this._vyssualsControl.ElementSynchronizer.UnsubscribeFromEvents());
+            _externalEventHandler.Raise(() => this._vyssualsControl.Synchronizer.UnsubscribeFromEvents());
             AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
         }
 

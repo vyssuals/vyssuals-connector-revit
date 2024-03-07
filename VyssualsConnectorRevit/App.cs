@@ -9,6 +9,7 @@ namespace Vyssuals.ConnectorRevit
     {
         public static ExternalCommandData CommandData { get; set; }
         public static Document Doc => CommandData.Application.ActiveUIDocument.Document;
+        public static View ActiveView => Doc.ActiveView;
         public static UIApplication UiApp => CommandData.Application;
         public static  string RevitVersion => CommandData.Application.Application.VersionNumber;
         public static string DocumentName => GetDocumentName(Doc);
