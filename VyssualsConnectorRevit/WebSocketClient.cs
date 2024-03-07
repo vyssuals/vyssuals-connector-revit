@@ -57,22 +57,37 @@ namespace Vyssuals.ConnectorRevit
             }
         }
 
-        public async Task SendMessageAsync(WebSocketMessage message)
+        public async Task SendMessageAsync(WebSocketMessage message, int retryCount = 3)
         {
             var segment = new ArraySegment<byte>(
-            Encoding.UTF8.GetBytes(message.SerializeToJson())
+                Encoding.UTF8.GetBytes(message.SerializeToJson())
             );
-            if (this.IsConnected)
+
+            for (int attempt = 0; attempt < retryCount; attempt++)
             {
-                await SendAsync(segment);
+                if (this.IsConnected)
+                {
+                    await SendAsync(segment);
+                    return; // If the send is successful, return from the method
+                }
+                else
+                {
+                    // Try to open a new connection
+                    Debug.WriteLine("wsClient: Reconnecting to server...");
+                    bool connected = await TryConnectAsync();
+                    if (connected)
+                    {
+                        await SendAsync(segment);
+                        return; // If the send is successful, return from the method
+                    }
+                }
+
+                // If the send fails, wait a bit before the next attempt
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
-            else
-            {
-                // open a new connection
-                Debug.WriteLine("wsClient: Reconnecting to server...");
-                await TryConnectAsync();
-                await SendAsync(segment);
-            }
+
+            // If all attempts fail, throw an exception or handle the failure in some other way
+            throw new Exception("Failed to send message after multiple attempts.");
         }
 
         public async Task DisconnectAsync()
