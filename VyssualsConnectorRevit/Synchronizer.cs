@@ -9,7 +9,7 @@ namespace Vyssuals.ConnectorRevit
     public class Synchronizer
     {
         public event EventHandler ElementsChanged;
-        public DataUpdate DataUpdate;
+        public DataUpdate DataUpdate = new DataUpdate();
 
         private bool _syncEnabled = false;
         private bool _documentChanged = false;
@@ -40,16 +40,21 @@ namespace Vyssuals.ConnectorRevit
         {
             if (!_syncEnabled || 
                 App.ActiveView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements) || 
-                !_documentChanged ||
-                _changedElementIds.Count == 0) return;
+                !_documentChanged) return;
 
             var processor = new Processor();
             this.DataUpdate = processor.GetNewData(_changedElementIds);
 
+            EmitEventCleanly();
+        }
+
+        private void EmitEventCleanly()
+        {
             if (this.DataUpdate.Elements.Count > 0 || 
                 this.DataUpdate.VisibleElements.Count > 0)
             {
                 OnElementsChanged();
+                Debug.WriteLine("Elements changed");
             }
 
             _changedElementIds.Clear();
@@ -61,15 +66,9 @@ namespace Vyssuals.ConnectorRevit
             Debug.WriteLine("Enabling sync");
             var processor = new Processor();
             this.DataUpdate = processor.GetAllData();
+            this._syncEnabled = true;
 
-            _documentChanged = false;
-            _syncEnabled = true;
-
-            if (this.DataUpdate.Elements.Count > 0 || 
-                 this.DataUpdate.VisibleElements.Count > 0)
-            {
-                OnElementsChanged();
-            }
+            EmitEventCleanly();
         }
 
         public void DisableSync()

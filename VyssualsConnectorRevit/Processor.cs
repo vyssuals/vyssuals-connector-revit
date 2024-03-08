@@ -19,32 +19,60 @@ namespace Vyssuals.ConnectorRevit
         private readonly HashSet<string> _uniqueParameterNames = new HashSet<string>();
         private readonly List<HeaderData> _headerData = new List<HeaderData>();
 
-        public ICollection<ElementId> GetVisibleElementIds()
+        public IEnumerable<ElementId> GetVisibleElementIds()
         {
-            return ViewCollector().WhereElementIsViewIndependent().ToElementIds();
+            return ViewCollector()
+                .WhereElementIsViewIndependent()
+                .WherePasses(_excludeCategoryFilter)
+                .Where(x => x.GetTypeId() != null &&
+                            x.Category != null &&
+                            !(x is FamilyInstance familyInstance && familyInstance.SuperComponent != null))
+                .Select(x => x.Id);
         }
 
         public DataUpdate GetAllData()
         {
+            var stopwatch = Stopwatch.StartNew();
+
             var Elements = GetElements(ViewCollector());
-            return new DataUpdate()
+            var dataUpdate = new DataUpdate()
             {
-                Elements = Elements, 
+                Elements = Elements,
                 HeaderData = _headerData,
                 VisibleElements = Elements.Select(x => x.id).ToList()
             };
+
+            stopwatch.Stop();
+            var elapsedSeconds = stopwatch.ElapsedMilliseconds / 1000;
+            Debug.WriteLine($"GetAllData took {elapsedSeconds} seconds");
+
+            return dataUpdate;
         }
 
         public DataUpdate GetNewData(ICollection<ElementId> changedElementIds)
         {
-            var viewElementIds = ViewCollector().ToElementIds();
+            var stopwatch = Stopwatch.StartNew();
+
+            var viewElementIds = GetVisibleElementIds();
+            Debug.WriteLine($"ViewElementIds: {viewElementIds.Count()}");
             var intersectedElementIds = viewElementIds.Intersect(changedElementIds).ToList();
-            return new DataUpdate()
+            var elements = new List<VyssualsElement>();
+            if (intersectedElementIds.Count > 0)
             {
-                Elements = GetElements(IdCollector(intersectedElementIds)),
+                elements = GetElements(IdCollector(intersectedElementIds));
+            }
+            var dataUpdate = new DataUpdate()
+            {
+                Elements = elements,
                 HeaderData = _headerData,
                 VisibleElements = viewElementIds.Select(x => x.Value.ToString()).ToList()
             };
+
+            stopwatch.Stop();
+            var elapsedSeconds = stopwatch.ElapsedMilliseconds / 1000;
+            Debug.WriteLine($"GetNewData took {elapsedSeconds} seconds");
+
+            return dataUpdate;
         }
 
         private FilteredElementCollector IdCollector(ICollection<ElementId> elementIds)
