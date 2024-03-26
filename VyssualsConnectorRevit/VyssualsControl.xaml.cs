@@ -20,7 +20,6 @@ namespace Vyssuals.ConnectorRevit
     public partial class VyssualsControl : Window, INotifyPropertyChanged
     {
         private readonly WebSocketManager _webSocketManager;
-        private ElementProcessor _elementProcessor => ElementSynchronizer.ElementProcessor;
         public ElementSynchronizer ElementSynchronizer;
 
         private bool _allowManualSync = true;
@@ -57,14 +56,22 @@ namespace Vyssuals.ConnectorRevit
             this.ElementSynchronizer.ElementsChanged += (sender, e) =>
             {
                 Debug.WriteLine("Sending data");
+                var timestamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
                 var payload = new Payload
                 {
-                    data = _elementProcessor.Elements,
-                    metadata = _elementProcessor.headerData
-                };
-                Task.Run(() => _webSocketManager.client.SendMessageAsync(new WebSocketMessage("data", payload)));
-            };
+                    data = ElementSynchronizer.ElementProcessor.Elements,
+                    metadata = ElementSynchronizer.ElementProcessor.HeaderData,
+                    update = new VyssualsUpdate
+                    (
+                        timestamp,
+                        UpdateType.Auto,
+                        "Vyssuals Update Test Name",
+                        ElementSynchronizer.ElementProcessor.VisibleElementIds
+                    )
 
+                };
+                Task.Run(() => _webSocketManager.client.SendMessageAsync(new WebSocketMessage(timestamp, MessageType.Data, payload)));
+            };
         }
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)

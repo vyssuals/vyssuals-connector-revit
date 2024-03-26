@@ -94,7 +94,8 @@ namespace Vyssuals.ConnectorRevit
         {
             if (webSocket.State == WebSocketState.Open)
             {
-                WebSocketMessage message = new WebSocketMessage("disconnect", new Payload());
+                string timestamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+                WebSocketMessage message = new WebSocketMessage(timestamp, MessageType.Disconnect, new Payload());
 
                 var buffer = Encoding.UTF8.GetBytes(message.SerializeToJson());
                 var segment = new ArraySegment<byte>(buffer);

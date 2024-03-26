@@ -52,7 +52,9 @@ namespace Vyssuals.ConnectorRevit
             if (!_syncEnabled || _activeView.IsInTemporaryViewMode(TemporaryViewMode.RevealHiddenElements) || !_documentChanged) return;
             Debug.WriteLine("Application idling");
 
+            this.ElementProcessor.Timestamp = TimestampHelper.Now();
             var visibleElementIds = ElementProcessor.GetVisibleElementIds();
+
             // get the difference between visible elements and ElementProcessor.Elements. treat all invisible elements as deleted
             deletedElementIds.UnionWith(ElementProcessor.Elements.Select(x => x.id).Except(visibleElementIds.Select(x => x.ToString())).Select(x => new ElementId(long.Parse(x))));
 
@@ -109,21 +111,21 @@ namespace Vyssuals.ConnectorRevit
             this._documentChanged = false;
         }
 
-        public void AddElements(List<ElementId> elementIds)
+        private void AddElements(List<ElementId> elementIds)
         {
             Debug.WriteLine("Add elements detected");
 
             this.ElementProcessor.AddElements(elementIds);
         }
 
-        public void RemoveElements(List<ElementId> ElementIds)
+        private void RemoveElements(List<ElementId> ElementIds)
         {
             Debug.WriteLine("Remove elements detected");
 
             this.ElementProcessor.RemoveElements(ElementIds.Select(x => x.ToString()).ToList());
         }
 
-        public void UpdateElements(List<ElementId> elementIds)
+        private void UpdateElements(List<ElementId> elementIds)
         {
             Debug.WriteLine("Update elements detected");
 

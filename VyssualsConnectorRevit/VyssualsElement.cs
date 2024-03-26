@@ -10,12 +10,20 @@ namespace Vyssuals.ConnectorRevit
     public class VyssualsElement
     {
         public string id { get; set; }
-        public Dictionary<string, object> attributes { get; set; }
+        public Versions versions { get; set; }
 
-        public VyssualsElement(string id, Dictionary<string, object> attributes)
+        public VyssualsElement(string id, string timestamp, Dictionary<string, object> attributes)
         {
             this.id = id;
-            this.attributes = attributes;
+            this.versions = new Versions
+            {
+                { timestamp, attributes }
+            };
         }
     }
+
+    public class Versions : Dictionary<string, object>
+    {
+    }
+
 }

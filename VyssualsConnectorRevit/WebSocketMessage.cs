@@ -8,6 +8,12 @@ using System.Diagnostics;
 
 namespace Vyssuals.ConnectorRevit
 {
+    public class MessageType
+    {
+        public static readonly string Data = "data";
+        public static readonly string Disconnect = "disconnect";
+    }
+
     [Serializable]
     public class WebSocketMessage
     {
@@ -19,10 +25,10 @@ namespace Vyssuals.ConnectorRevit
         public string senderName { get; set; }
         public Payload payload { get; set; }
 
-        public WebSocketMessage(string type, Payload payload)
+        public WebSocketMessage(string timestamp, string type, Payload payload)
         {
             this.type = type;
-            this.timestamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            this.timestamp = timestamp;
             this.version = "1.0";
             this.sender = "Revit";
             this.senderVersion = App.RevitVersion;
@@ -41,5 +47,6 @@ namespace Vyssuals.ConnectorRevit
     {
         public List<VyssualsElement> data { get; set; }
         public List<HeaderData> metadata { get; set; }
+        public VyssualsUpdate update { get; set; }  
     }
 }

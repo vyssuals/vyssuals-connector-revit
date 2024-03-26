@@ -62,6 +62,7 @@
     <Compile Include="ExternalEventHandler.cs" />
     <Compile Include="HeaderData.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="TimestampHelper.cs" />
     <Compile Include="VyssualsControl.xaml.cs">
       <DependentUpon>VyssualsControl.xaml</DependentUpon>
     </Compile>
@@ -69,6 +70,7 @@
     <Compile Include="ElementProcessor.cs" />
     <Compile Include="RibbonMaker.cs" />
     <Compile Include="VyssualsElement.cs" />
+    <Compile Include="VyssualsUpdate.cs" />
     <Compile Include="WebSocketClient.cs" />
     <Compile Include="WebSocketManager.cs" />
     <Compile Include="WebSocketMessage.cs" />
