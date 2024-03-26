@@ -201,7 +201,6 @@ namespace Vyssuals.ConnectorRevit
 
                         paramValue = param.AsValueString();
                         storageType = "string";
-                        Debug.WriteLine(paramName, paramValue);
 
                         if (paramValue == null || string.IsNullOrEmpty(paramValue?.ToString()))
                         {

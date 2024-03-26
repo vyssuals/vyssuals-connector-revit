@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace Vyssuals.ConnectorRevit
 {
@@ -38,15 +39,40 @@ namespace Vyssuals.ConnectorRevit
 
         public string SerializeToJson()
         {
-            return JsonSerializer.Serialize(this);
+            Debug.WriteLine(JsonSerializer.Serialize(this.payload));
+            if (this.payload is DataPayload)
+                Debug.WriteLine("is DataPayload");
+                Debug.WriteLine(JsonSerializer.Serialize((this.payload as DataPayload).data));
+
+            var Json = JsonSerializer.Serialize(this);
+            Debug.WriteLine(Json);
+            return Json;
         }
     }
 
     [Serializable]
-    public class Payload
+    public abstract class Payload { }
+
+    [Serializable]
+    public class DataPayload : Payload
     {
         public List<VyssualsElement> data { get; set; }
         public List<HeaderData> metadata { get; set; }
         public VyssualsUpdate update { get; set; }  
+    }
+
+    [Serializable]
+    public class ColorPayload : Payload
+    {
+        public List<ColorInformation> colors { get; set; }
+    }
+
+    [Serializable]
+    public class ColorInformation
+    {
+        public string color { get; set; }
+        public string attributeName { get; set; }
+        public string attributeValue { get; set; }
+        public string[] ids { get; set; }
     }
 }

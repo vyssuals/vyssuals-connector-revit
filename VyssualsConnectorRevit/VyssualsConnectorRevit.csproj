@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="ElementPainter.cs" />
     <Compile Include="ElementSynchronizer.cs" />
     <Compile Include="ExternalEventHandler.cs" />
     <Compile Include="HeaderData.cs" />

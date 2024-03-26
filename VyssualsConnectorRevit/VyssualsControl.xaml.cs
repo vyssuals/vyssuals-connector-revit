@@ -57,7 +57,7 @@ namespace Vyssuals.ConnectorRevit
             {
                 Debug.WriteLine("Sending data");
                 var timestamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
-                var payload = new Payload
+                var payload = new DataPayload
                 {
                     data = ElementSynchronizer.ElementProcessor.Elements,
                     metadata = ElementSynchronizer.ElementProcessor.HeaderData,
@@ -70,7 +70,8 @@ namespace Vyssuals.ConnectorRevit
                     )
 
                 };
-                Task.Run(() => _webSocketManager.client.SendMessageAsync(new WebSocketMessage(timestamp, MessageType.Data, payload)));
+                var message = new WebSocketMessage(timestamp, MessageType.Data, payload);
+                Task.Run(() => _webSocketManager.client.SendMessageAsync(message));
             };
         }
 
