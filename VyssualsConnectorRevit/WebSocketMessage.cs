@@ -11,8 +11,10 @@ namespace Vyssuals.ConnectorRevit
 {
     public class MessageType
     {
-        public static readonly string Data = "data";
-        public static readonly string Disconnect = "disconnect";
+        public const string Data = "data";
+        public const string Disconnect = "disconnect";
+        public const string Color = "color";
+        public const string ColorCleanup = "colorCleanup";
     }
 
     [Serializable]
@@ -74,7 +76,7 @@ namespace Vyssuals.ConnectorRevit
         public string color { get; set; }
         public string attributeName { get; set; }
         public string attributeValue { get; set; }
-        public string[] ids { get; set; }
+        public List<string> ids { get; set; }
     }
 
     public class PayloadConverter : JsonConverter<Payload>

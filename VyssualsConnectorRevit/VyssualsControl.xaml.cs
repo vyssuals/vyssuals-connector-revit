@@ -21,6 +21,7 @@ namespace Vyssuals.ConnectorRevit
     {
         public ElementSynchronizer ElementSynchronizer;
         private readonly WebSocketManager _webSocketManager;
+        private readonly ElementPainter _elementPainter = new ElementPainter();
 
         private bool _allowManualSync = true;
         public bool AllowManualSync
@@ -101,11 +102,22 @@ namespace Vyssuals.ConnectorRevit
 
         private void WebSocketClient_MessageReceived(WebSocketMessage message)
         {
-            if (message.payload is ColorPayload)
+            switch (message.type)
             {
-                Debug.WriteLine("Received color payload", message.payload);
-                List<ColorInformation> colors = (message.payload as ColorPayload).colors;
-                ElementPainter.PaintElements(colors);
+                case MessageType.Color:
+                    if (message.payload is ColorPayload)
+                    {
+                        Debug.WriteLine("Received color payload", message.payload);
+                        List<ColorInformation> colors = (message.payload as ColorPayload).colors;
+                        App.EventHandler.Raise(() => _elementPainter.PaintElements(colors));
+                    }
+                    break;
+                case MessageType.ColorCleanup:
+                    Debug.WriteLine("Received color cleanup payload", message.payload);
+                    App.EventHandler.Raise(() => _elementPainter.ClearPaintedElements());
+                    break;
+                default:
+                    break;
             }
         }
 
