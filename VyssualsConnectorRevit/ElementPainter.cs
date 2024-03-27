@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,17 +9,17 @@ namespace Vyssuals.ConnectorRevit
 {
     public class ElementPainter
     {
-        public Dictionary<string, List<string>> ColorMessage = new Dictionary<string, List<string>>();
 
-        public void PaintElements()
+        public static void PaintElements(List<ColorInformation> colors)
         { 
             // iterate over the dictionary, use keys and values to paint elements
-            foreach (KeyValuePair<string, List<string>> entry in ColorMessage)
+            foreach (var color in colors)
             {
-                string color = entry.Key;
-                List<string> elementIds = entry.Value;
-
-                // paint element with elementId using color
+                Debug.WriteLine(color.color);
+                Debug.WriteLine(color.attributeName);
+                Debug.WriteLine(color.attributeValue);
+                Debug.WriteLine(color.ids);
+                
             }
         }
 

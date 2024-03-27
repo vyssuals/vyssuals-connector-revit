@@ -19,8 +19,8 @@ namespace Vyssuals.ConnectorRevit
 {
     public partial class VyssualsControl : Window, INotifyPropertyChanged
     {
-        private readonly WebSocketManager _webSocketManager;
         public ElementSynchronizer ElementSynchronizer;
+        private readonly WebSocketManager _webSocketManager;
 
         private bool _allowManualSync = true;
         public bool AllowManualSync
@@ -50,13 +50,14 @@ namespace Vyssuals.ConnectorRevit
             string severUrl = "http://localhost:8184/";
             this.ElementSynchronizer = synchronizer;
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
+            this._webSocketManager.client.MessageReceived += WebSocketClient_MessageReceived;
             this.Closing += VyssualsControl_Closing;
             Task.Run(() => _webSocketManager.StartAsync());
 
             this.ElementSynchronizer.ElementsChanged += (sender, e) =>
             {
                 Debug.WriteLine("Sending data");
-                var timestamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+                var timestamp = TimestampHelper.Now();
                 var payload = new DataPayload
                 {
                     data = ElementSynchronizer.ElementProcessor.Elements,
@@ -97,6 +98,17 @@ namespace Vyssuals.ConnectorRevit
             ElementSynchronizer.DisableSync();
             AllowManualSync = true;
         }
+
+        private void WebSocketClient_MessageReceived(WebSocketMessage message)
+        {
+            if (message.payload is ColorPayload)
+            {
+                Debug.WriteLine("Received color payload", message.payload);
+                List<ColorInformation> colors = (message.payload as ColorPayload).colors;
+                ElementPainter.PaintElements(colors);
+            }
+        }
+
         public void OnWebAppClick(object sender, EventArgs e)
         {
             Process.Start("http://localhost:5173/");
