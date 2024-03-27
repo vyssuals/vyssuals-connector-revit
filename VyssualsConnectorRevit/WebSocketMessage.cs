@@ -74,8 +74,6 @@ namespace Vyssuals.ConnectorRevit
     public class ColorInformation
     {
         public string color { get; set; }
-        public string attributeName { get; set; }
-        public string attributeValue { get; set; }
         public List<string> ids { get; set; }
     }
 

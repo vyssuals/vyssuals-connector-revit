@@ -22,7 +22,7 @@ namespace Vyssuals.ConnectorRevit
             using (Transaction t = new Transaction(App.Doc, "Vyssuals: Set Temporary Colors"))
             {
                 t.Start();
-                this.Clean(this._paintedElements);
+                this.Clean();
                 foreach (ColorInformation colorInfo in colors)
                 {
                     Color color = HexToRevitRgb(colorInfo.color);
@@ -50,13 +50,13 @@ namespace Vyssuals.ConnectorRevit
             using (Transaction t = new Transaction(App.Doc, "Vyssuals: Clear Temporary Colors"))
             {
                 t.Start();
-                this.Clean(this._paintedElements);
+                this.Clean();
                 t.Commit();
             }
             this._paintedElements.Clear();
         }
 
-        private void Clean(List<ElementId> elements)
+        private void Clean()
         {
             var view = App.Doc.ActiveView;
             var cleanOverrides = new OverrideGraphicSettings();
