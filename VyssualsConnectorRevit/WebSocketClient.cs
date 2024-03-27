@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Text;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Vyssuals.ConnectorRevit
 {
     public class WebSocketClient
     {
+        public event Action<WebSocketMessage> MessageReceived;
         private ClientWebSocket webSocket = null;
         private string _clientUrl;
         public bool IsConnected
@@ -88,6 +91,45 @@ namespace Vyssuals.ConnectorRevit
 
             // If all attempts fail, throw an exception or handle the failure in some other way
             throw new Exception("Failed to send message after multiple attempts.");
+        }
+
+        public async Task ReceiveMessagesAsync(CancellationToken cancellationToken)
+        {
+            var buffer = new ArraySegment<byte>(new byte[8192]);
+            var messageContents = new List<byte>();
+
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    var result = await webSocket.ReceiveAsync(buffer, cancellationToken);
+
+                    messageContents.AddRange(buffer.Array.Take(result.Count));
+
+                    if (result.EndOfMessage)
+                    {
+                        if (result.MessageType == WebSocketMessageType.Text)
+                        {
+                            var messageJson = Encoding.UTF8.GetString(messageContents.ToArray());
+                            var message = JsonSerializer.Deserialize<WebSocketMessage>(messageJson);
+
+                            // Raise the MessageReceived event
+                            MessageReceived?.Invoke(message);
+                        }
+                        else if (result.MessageType == WebSocketMessageType.Close)
+                        {
+                            break;
+                        }
+
+                        messageContents.Clear();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception
+                Debug.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         public async Task DisconnectAsync()
