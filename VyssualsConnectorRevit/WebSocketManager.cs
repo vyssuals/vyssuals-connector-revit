@@ -25,20 +25,27 @@ namespace Vyssuals.ConnectorRevit
 
         public async Task StartAsync()
         {
-            if (await this.client.TryConnectAsync()) return;
-
-            Debug.WriteLine("wsManger: Starting the server...");
-            this.server = new WebSocketServer();
-            Task.Run(() => this.server.RunServerAsync(this.serverUrl, this.cts.Token));
-
-            bool clientConnected = false;
-            int maxAttempts = 10;
-            int attempt = 1;
-            while (clientConnected == false && attempt <= maxAttempts)
+            bool success = await this.client.TryConnectAsync();
+            if (!success)
             {
-                Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempt} / {maxAttempts}");
-                clientConnected = await this.client.TryConnectAsync();
-                attempt++;
+                Debug.WriteLine("wsManger: Starting the server...");
+                this.server = new WebSocketServer();
+                Task.Run(() => this.server.RunServerAsync(this.serverUrl, this.cts.Token));
+
+                bool clientConnected = false;
+                int maxAttempts = 10;
+                int attempt = 1;
+                while (clientConnected == false && attempt <= maxAttempts)
+                {
+                    Debug.WriteLine($"wsManger: Trying to connect to the server... attempt {attempt} / {maxAttempts}");
+                    clientConnected = await this.client.TryConnectAsync();
+                    attempt++;
+                }
+            }
+
+            if (this.client.IsConnected)
+            {
+                await this.client.ReceiveMessagesAsync(CancellationToken.None);
             }
         }
 
