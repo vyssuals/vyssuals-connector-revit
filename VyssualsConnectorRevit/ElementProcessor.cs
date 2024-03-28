@@ -179,6 +179,7 @@ namespace Vyssuals.ConnectorRevit
                 {
                     case StorageType.Double:
                         paramValue = UnitUtils.ConvertFromInternalUnits(param.AsDouble(), param.GetUnitTypeId());
+                        paramValue = Math.Round((double)paramValue, 2);
                         storageType = "number";
                         break;
 
