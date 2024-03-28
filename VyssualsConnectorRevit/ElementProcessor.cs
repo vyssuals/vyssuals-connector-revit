@@ -229,7 +229,7 @@ namespace Vyssuals.ConnectorRevit
                 }
 
                 parameterDictionary[paramName] = paramValue;
-                AddHeaderData(paramName, storageType, GetUnitSymbol(param));
+                AddHeaderData(paramName, storageType, GetUnitSymbol(param, storageType));
             }
         }
 
@@ -245,7 +245,7 @@ namespace Vyssuals.ConnectorRevit
             this.uniqueParameterNames.Add(name);
         }
 
-        private string GetUnitSymbol(Parameter param)
+        private string GetUnitSymbol(Parameter param, string type)
         {
             if (param.StorageType == StorageType.Double)
             {
@@ -258,10 +258,9 @@ namespace Vyssuals.ConnectorRevit
             }
             if (param.StorageType == StorageType.Integer)
             {
-                return "Integer";
+                if (type == "number") return "Sum";
             }
-
-            return "";
+            return "# Unique Items";
         }
 
 
