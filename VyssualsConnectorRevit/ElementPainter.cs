@@ -13,13 +13,15 @@ namespace Vyssuals.ConnectorRevit
 {
     public class ElementPainter
     {
+        public const string SET_TEMPORARY_COLORS = "Vyssuals: Set Temporary Colors";
+        public const string CLEAR_TEMPORARY_COLORS = "Vyssuals: Clear Temporary Colors";
         private List<ElementId> _paintedElements = new List<ElementId>();
         public void PaintElements(List<ColorInformation> colors)
         { 
             var patternId = GetPatternId();
             var view = App.Doc.ActiveView;
 
-            using (Transaction t = new Transaction(App.Doc, "Vyssuals: Set Temporary Colors"))
+            using (Transaction t = new Transaction(App.Doc, SET_TEMPORARY_COLORS))
             {
                 t.Start();
                 this.Clean();
@@ -47,7 +49,7 @@ namespace Vyssuals.ConnectorRevit
 
         public void ClearPaintedElements()
         {
-            using (Transaction t = new Transaction(App.Doc, "Vyssuals: Clear Temporary Colors"))
+            using (Transaction t = new Transaction(App.Doc, CLEAR_TEMPORARY_COLORS))
             {
                 t.Start();
                 this.Clean();

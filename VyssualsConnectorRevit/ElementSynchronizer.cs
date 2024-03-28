@@ -37,7 +37,10 @@ namespace Vyssuals.ConnectorRevit
 
         public void OnDocumentChanged(object sender, DocumentChangedEventArgs e)
         {
+            e.GetTransactionNames().ToList().ForEach(x => Debug.WriteLine(x));
             if (!_syncEnabled) return;
+            // check if ElementPainter.SET_TEMPORARY_COLORS or ElementPainter.CLEAR_TEMPORARY_COLORS is in the transaction names
+            if (e.GetTransactionNames().Contains(ElementPainter.SET_TEMPORARY_COLORS) || e.GetTransactionNames().Contains(ElementPainter.CLEAR_TEMPORARY_COLORS)) return;
             Debug.WriteLine("Document changed");
 
             // Add the ElementIds to the respective collections
