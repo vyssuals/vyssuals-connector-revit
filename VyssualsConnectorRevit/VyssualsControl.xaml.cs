@@ -22,8 +22,8 @@ namespace Vyssuals.ConnectorRevit
         public ElementSynchronizer ElementSynchronizer;
         private readonly WebSocketManager _webSocketManager;
         private readonly ElementPainter _elementPainter = new ElementPainter();
-
         private bool _allowManualSync = true;
+        private string _updateType = UpdateType.Manual; 
         public bool AllowManualSync
         {
             get { return _allowManualSync; }
@@ -46,6 +46,7 @@ namespace Vyssuals.ConnectorRevit
         public VyssualsControl(ElementSynchronizer synchronizer)
         {
             InitializeComponent();
+            updateTextBox.Text = "<Update Name>";
 
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
@@ -66,8 +67,8 @@ namespace Vyssuals.ConnectorRevit
                     update = new VyssualsUpdate
                     (
                         timestamp,
-                        UpdateType.Auto,
-                        "Vyssuals Update Test Name",
+                        _updateType,
+                        updateTextBox.Text,
                         ElementSynchronizer.ElementProcessor.VisibleElementIds
                     )
 
@@ -79,6 +80,7 @@ namespace Vyssuals.ConnectorRevit
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
         {
+            _updateType = UpdateType.Manual;
             this.ElementSynchronizer.EnableSync();
             this.ElementSynchronizer.DisableSync();
         }
@@ -90,6 +92,8 @@ namespace Vyssuals.ConnectorRevit
 
         private void SyncButton_Checked(object sender, RoutedEventArgs e)
         {
+            _updateType = UpdateType.Auto;
+            updateTextBox.Text = "Auto Sync";
             ElementSynchronizer.EnableSync();
             AllowManualSync = false;
         }

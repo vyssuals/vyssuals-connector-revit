@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Vyssuals.ConnectorRevit"
     mc:Ignorable="d" 
-    Width="220" Height="280"
+    Width="220" Height="320"
     WindowStyle="None" AllowsTransparency="True" Background="Transparent"
     MouseLeftButtonDown="Window_MouseLeftButtonDown">
 
@@ -147,16 +147,28 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Vyssuals" HorizontalAlignment="Center" FontSize="29" Grid.Row="1" FontWeight="Medium" />
-                <Button x:Name="sendButton" Content="Refresh Data" Click="HandleSendDataClicked" Style="{StaticResource GradientButtonStyle}" Grid.Row="4" 
-                    IsEnabled="{Binding AllowManualSync, RelativeSource={RelativeSource AncestorType=Window}}"/>
-
-                <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="5" />
                 <ToggleButton x:Name="syncButton" Content="Auto Sync" Style="{StaticResource AutoSyncButtonStyle}" Grid.Row="3" Checked="SyncButton_Checked" Unchecked="SyncButton_Unchecked"/>
+                <Button x:Name="sendButton" Content="Update Data" Click="HandleSendDataClicked" Style="{StaticResource GradientButtonStyle}" Grid.Row="4" 
+                    IsEnabled="{Binding AllowManualSync, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                <TextBox x:Name="updateTextBox" Grid.Row="5" Margin="20 5 " Padding="5" TextAlignment="Center" Width="120">
+                    <TextBox.Template>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border Background="{TemplateBinding Background}" 
+                                    BorderBrush="LightGray" 
+                                    BorderThickness="1" 
+                                    CornerRadius="8">
+                                <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                            </Border>
+                        </ControlTemplate>
+                    </TextBox.Template>
+                </TextBox>
+                <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="7" />
 
-                <Button x:Name="webAppButton" Content="vyssuals.com" Click="OnWebAppClick" Style="{StaticResource TransparentButtonStyle}" Grid.Row="6" />
+                <Button x:Name="webAppButton" Content="Show Vyssuals" Click="OnWebAppClick" Style="{StaticResource TransparentButtonStyle}" Grid.Row="6" />
 
             </Grid>
         </Border>
