@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>Vyssuals</Name>
+		<Assembly>C:\ProgramData\Autodesk\Revit\Addins\2021\Vyssuals\VyssualsConnectorRevit.dll</Assembly>
+		<AddInId>0cc2d550-8ff7-4216-aee6-56ad1929d48e</AddInId>
+		<FullClassName>Vyssuals.ConnectorRevit.App</FullClassName>
+		<Description>Real Time Data Visualization.</Description>
+		<VendorId>Yssentyl Technologies</VendorId>
+		<VendorDescription>https://yssentyl.com/</VendorDescription>
+	</AddIn>
+</RevitAddIns>
