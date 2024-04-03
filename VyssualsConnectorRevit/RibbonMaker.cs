@@ -16,7 +16,7 @@ namespace Vyssuals.ConnectorRevit
             // Create button data
             PushButtonData buttonData = new PushButtonData(
                 "VyssualsButton",
-                "Start Vyssuals",
+                "Start",
                 Assembly.GetExecutingAssembly().Location,
                 "Vyssuals.ConnectorRevit.StartCommand");
 
