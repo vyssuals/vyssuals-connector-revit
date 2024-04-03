@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Vyssuals.ConnectorRevit
 {
     [Transaction(TransactionMode.Manual)]
-    public class Programm : IExternalCommand
+    public class StartCommand : IExternalCommand
     {
         private VyssualsControl _vyssualsControl;
         private readonly ExternalEventHandler _externalEventHandler = new ExternalEventHandler();
@@ -62,8 +62,8 @@ namespace Vyssuals.ConnectorRevit
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             // depending on the build mode, use different paths
-            string assemblyFolder = @"C:\Users\admin\Documents\GitHub\vyssuals-connector-revit\VyssualsConnectorRevit\bin\Debug";
-            //string assemblyFolder = $"C:\\ProgramData\\Autodesk\\Revit\\Addins\\{App.RevitVersion}\\Vyssuals"; // Specify the directory where your DLLs are located
+            //string assemblyFolder = @"C:\Users\admin\Documents\GitHub\vyssuals-connector-revit\VyssualsConnectorRevit\bin\Debug";
+            string assemblyFolder = $"C:\\ProgramData\\Autodesk\\Revit\\Addins\\{App.RevitVersion}\\Vyssuals"; // Specify the directory where your DLLs are located
             string assemblyName = new AssemblyName(args.Name).Name;
             string assemblyPath = Path.Combine(assemblyFolder, assemblyName + ".dll");
 

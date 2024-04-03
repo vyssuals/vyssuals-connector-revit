@@ -63,7 +63,7 @@
     <Compile Include="ElementSynchronizer.cs" />
     <Compile Include="ExternalEventHandler.cs" />
     <Compile Include="HeaderData.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="StartCommand.cs" />
     <Compile Include="TimestampHelper.cs" />
     <Compile Include="VyssualsControl.xaml.cs">
       <DependentUpon>VyssualsControl.xaml</DependentUpon>
@@ -91,6 +91,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="VyssualsLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
