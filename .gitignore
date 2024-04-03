@@ -70,3 +70,5 @@ VyssualsConnectorRevit/.vs/VyssualsConnectorRevit/copilot-chat/3184b633/V0_c33fb
 *.v2
 *.vs
 VyssualsConnectorRevit/.vs/VyssualsConnectorRevit/DesignTimeBuild/.dtbcache.v2
+/VyssualsRevitInstaller/Debug
+/VyssualsRevitInstaller/Release
