@@ -22,12 +22,6 @@
         "Entry"
         {
         "MsmKey" = "8:_136F20E56B1ABC4ED08A41DB8DA14930"
-        "OwnerKey" = "8:_27C1BF6DCC704103BE0746E5872FE432"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_136F20E56B1ABC4ED08A41DB8DA14930"
         "OwnerKey" = "8:_DDCB09DFE04747C5ADC0C5F95C1B9DE2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -35,12 +29,6 @@
         {
         "MsmKey" = "8:_136F20E56B1ABC4ED08A41DB8DA14930"
         "OwnerKey" = "8:_A85E6B27026643BB90FB6F33E3A5AEDC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_136F20E56B1ABC4ED08A41DB8DA14930"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,7 +57,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_27C1BF6DCC704103BE0746E5872FE432"
+        "MsmKey" = "8:_28C52E0F2D15411E93CB985868FB06E2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -99,25 +87,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2ACAB183DB309E2E1D9CDAAAC9042380"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2E04262272034E50900B54EBE8FB283A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_32D57B5E790C4ED0B3A6D780F142BEE1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3A028F89DF404652915743C27F9C7636"
+        "MsmKey" = "8:_3476221C71144A139646F507F4C2131A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,19 +117,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3D269CDCD1C7A397D4757E410845AB95"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3E2DA2DFDFEE476587262442D3443F8A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_47139405663746C4AE45685C19488C60"
+        "MsmKey" = "8:_492A0EF23A1D4C78AFC6C33AF72007F8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -171,12 +135,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_547716D02C5C40CDB8F3B6EA3B89AC6B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_55BEB07355CF45449EEDE7FC50C4F96E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -184,6 +142,12 @@
         "Entry"
         {
         "MsmKey" = "8:_66A1328CA99944D2900D23B6025C4150"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_78D12480EEE44242A3F52654476EE763"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -203,18 +167,6 @@
         {
         "MsmKey" = "8:_7BF650F84999E660878B8F4706B50EF6"
         "OwnerKey" = "8:_A85E6B27026643BB90FB6F33E3A5AEDC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7BF650F84999E660878B8F4706B50EF6"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7C534C89D0D93BCD48E332225A57E125"
-        "OwnerKey" = "8:_3E2DA2DFDFEE476587262442D3443F8A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -268,12 +220,6 @@
         "Entry"
         {
         "MsmKey" = "8:_8FD5783366AAD98218234F22C2191FB2"
-        "OwnerKey" = "8:_C600EB5B998440DAAF5A4A275C1B7AFE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8FD5783366AAD98218234F22C2191FB2"
         "OwnerKey" = "8:_AF47A70D343843F0A4FCFD315DE98A96"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -292,18 +238,12 @@
         "Entry"
         {
         "MsmKey" = "8:_8FD5783366AAD98218234F22C2191FB2"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8FD5783366AAD98218234F22C2191FB2"
         "OwnerKey" = "8:_7C534C89D0D93BCD48E332225A57E125"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_97FEFF1DDF534A50B4274BF90844B005"
+        "MsmKey" = "8:_945937A99FD94AF8AE61B228440594E2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -322,12 +262,6 @@
         "Entry"
         {
         "MsmKey" = "8:_A01D22C3C2CF462B8A3B8DF2204BD5E9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -357,20 +291,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B2181085AD57489690512595570BD79C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B40AAC06A0264648AF6945FF6D58E04A"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C600EB5B998440DAAF5A4A275C1B7AFE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C6A7C2F3348BB7C6AE12AD8884DC3EF1"
-        "OwnerKey" = "8:_3E2DA2DFDFEE476587262442D3443F8A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -400,12 +328,6 @@
         "Entry"
         {
         "MsmKey" = "8:_CA8C146CBA366FB10C8F89F0F553B766"
-        "OwnerKey" = "8:_27C1BF6DCC704103BE0746E5872FE432"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CA8C146CBA366FB10C8F89F0F553B766"
         "OwnerKey" = "8:_DDCB09DFE04747C5ADC0C5F95C1B9DE2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -413,12 +335,6 @@
         {
         "MsmKey" = "8:_CA8C146CBA366FB10C8F89F0F553B766"
         "OwnerKey" = "8:_A85E6B27026643BB90FB6F33E3A5AEDC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CA8C146CBA366FB10C8F89F0F553B766"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -447,24 +363,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D4D5D247DF62406C8246BCA75DA7DCDF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D8E5D86F7CB042F98D23A6A9A83DE007"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DA6DBF391E644C4B9EF0F07A820696D8"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DDCB09DFE04747C5ADC0C5F95C1B9DE2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -484,19 +382,7 @@
         "Entry"
         {
         "MsmKey" = "8:_E06F021BDAAEE9AD5BC109F2F9A76729"
-        "OwnerKey" = "8:_DA6DBF391E644C4B9EF0F07A820696D8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E06F021BDAAEE9AD5BC109F2F9A76729"
         "OwnerKey" = "8:_A85E6B27026643BB90FB6F33E3A5AEDC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E06F021BDAAEE9AD5BC109F2F9A76729"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -550,19 +436,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FD2FF8BBF773E812B9966C5A2BCF0F71"
-        "OwnerKey" = "8:_27C1BF6DCC704103BE0746E5872FE432"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FD2FF8BBF773E812B9966C5A2BCF0F71"
         "OwnerKey" = "8:_DDCB09DFE04747C5ADC0C5F95C1B9DE2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FD2FF8BBF773E812B9966C5A2BCF0F71"
-        "OwnerKey" = "8:_C600EB5B998440DAAF5A4A275C1B7AFE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -581,12 +455,6 @@
         {
         "MsmKey" = "8:_FD2FF8BBF773E812B9966C5A2BCF0F71"
         "OwnerKey" = "8:_A85E6B27026643BB90FB6F33E3A5AEDC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FD2FF8BBF773E812B9966C5A2BCF0F71"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -676,31 +544,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DA6DBF391E644C4B9EF0F07A820696D8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D8E5D86F7CB042F98D23A6A9A83DE007"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D4D5D247DF62406C8246BCA75DA7DCDF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_CA0D2A22660B4AB0824A4E7E84103982"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C600EB5B998440DAAF5A4A275C1B7AFE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -724,12 +568,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A7F5C9C580DB4B4C8068151170487334"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A01D22C3C2CF462B8A3B8DF2204BD5E9"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -743,12 +581,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_98B902D3C8EA4D2C933C8479F3EE2243"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_97FEFF1DDF534A50B4274BF90844B005"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -784,25 +616,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_547716D02C5C40CDB8F3B6EA3B89AC6B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_49B8A6A8C7F14A1D9E52D8E3DF6FF48F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_47139405663746C4AE45685C19488C60"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3E2DA2DFDFEE476587262442D3443F8A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -844,19 +658,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3A028F89DF404652915743C27F9C7636"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_32D57B5E790C4ED0B3A6D780F142BEE1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_27C1BF6DCC704103BE0746E5872FE432"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1046,23 +848,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_27C1BF6DCC704103BE0746E5872FE432"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_28C52E0F2D15411E93CB985868FB06E2"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_27C1BF6DCC704103BE0746E5872FE432"
-                    {
-                    "Name" = "8:System.Text.Encodings.Web.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Text.Encodings.Web.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\WebsocketServer.pdb"
+            "TargetName" = "8:WebsocketServer.pdb"
             "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
+            "Folder" = "8:_4484F7D22F474517BB69535268D257AD"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1128,26 +919,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2E04262272034E50900B54EBE8FB283A"
-            {
-            "SourcePath" = "8:Vyssuals2021.addin"
-            "TargetName" = "8:Vyssuals2021.addin"
-            "Tag" = "8:"
-            "Folder" = "8:_3A426C152FD64C5D98647147876200CF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_32D57B5E790C4ED0B3A6D780F142BEE1"
             {
             "AssemblyRegister" = "3:1"
@@ -1179,23 +950,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3A028F89DF404652915743C27F9C7636"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3476221C71144A139646F507F4C2131A"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3A028F89DF404652915743C27F9C7636"
-                    {
-                    "Name" = "8:System.Numerics.Vectors.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Numerics.Vectors.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\VyssualsConnectorRevit.pdb"
+            "TargetName" = "8:VyssualsConnectorRevit.pdb"
             "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
+            "Folder" = "8:_5BCA4ABD6726497DA640F0F4D38695EF"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1241,54 +1001,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3E2DA2DFDFEE476587262442D3443F8A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_492A0EF23A1D4C78AFC6C33AF72007F8"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:VyssualsConnectorRevit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3E2DA2DFDFEE476587262442D3443F8A"
-                    {
-                    "Name" = "8:VyssualsConnectorRevit.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\VyssualsConnectorRevit.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\WebsocketServer.pdb"
+            "TargetName" = "8:WebsocketServer.pdb"
             "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47139405663746C4AE45685C19488C60"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WebsocketServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_47139405663746C4AE45685C19488C60"
-                    {
-                    "Name" = "8:WebsocketServer.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\WebsocketServer.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
+            "Folder" = "8:_A42AE190258744CF8222E794CA19D231"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1354,37 +1072,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_547716D02C5C40CDB8F3B6EA3B89AC6B"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_547716D02C5C40CDB8F3B6EA3B89AC6B"
-                    {
-                    "Name" = "8:System.ValueTuple.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.ValueTuple.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_55BEB07355CF45449EEDE7FC50C4F96E"
             {
             "AssemblyRegister" = "3:1"
@@ -1433,6 +1120,26 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A42AE190258744CF8222E794CA19D231"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_78D12480EEE44242A3F52654476EE763"
+            {
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\WebsocketServer.pdb"
+            "TargetName" = "8:WebsocketServer.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_5BCA4ABD6726497DA640F0F4D38695EF"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1633,23 +1340,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_97FEFF1DDF534A50B4274BF90844B005"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_945937A99FD94AF8AE61B228440594E2"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_97FEFF1DDF534A50B4274BF90844B005"
-                    {
-                    "Name" = "8:System.Buffers.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Buffers.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\VyssualsConnectorRevit.pdb"
+            "TargetName" = "8:VyssualsConnectorRevit.pdb"
             "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
+            "Folder" = "8:_A42AE190258744CF8222E794CA19D231"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1743,37 +1439,6 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4484F7D22F474517BB69535268D257AD"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A7F5C9C580DB4B4C8068151170487334"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Text.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_A7F5C9C580DB4B4C8068151170487334"
-                    {
-                    "Name" = "8:System.Text.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Text.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1912,12 +1577,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B40AAC06A0264648AF6945FF6D58E04A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B2181085AD57489690512595570BD79C"
             {
-            "SourcePath" = "8:Vyssuals2024.addin"
-            "TargetName" = "8:Vyssuals2024.addin"
+            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\VyssualsConnectorRevit.pdb"
+            "TargetName" = "8:VyssualsConnectorRevit.pdb"
             "Tag" = "8:"
-            "Folder" = "8:_0BE303E0199C45E89E79FF7E84F8450C"
+            "Folder" = "8:_4484F7D22F474517BB69535268D257AD"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1932,23 +1597,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C600EB5B998440DAAF5A4A275C1B7AFE"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B40AAC06A0264648AF6945FF6D58E04A"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_C600EB5B998440DAAF5A4A275C1B7AFE"
-                    {
-                    "Name" = "8:System.Memory.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Memory.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:Vyssuals2024.addin"
+            "TargetName" = "8:Vyssuals2024.addin"
             "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
+            "Folder" = "8:_0BE303E0199C45E89E79FF7E84F8450C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -2054,99 +1708,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D4D5D247DF62406C8246BCA75DA7DCDF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D4D5D247DF62406C8246BCA75DA7DCDF"
-                    {
-                    "Name" = "8:System.Threading.Tasks.Extensions.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Threading.Tasks.Extensions.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D8E5D86F7CB042F98D23A6A9A83DE007"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D8E5D86F7CB042F98D23A6A9A83DE007"
-                    {
-                    "Name" = "8:System.Runtime.CompilerServices.Unsafe.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\System.Runtime.CompilerServices.Unsafe.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DA6DBF391E644C4B9EF0F07A820696D8"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_DA6DBF391E644C4B9EF0F07A820696D8"
-                    {
-                    "Name" = "8:Microsoft.Bcl.AsyncInterfaces.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\VyssualsConnectorRevit\\bin\\Release\\Microsoft.Bcl.AsyncInterfaces.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DE4B075D032D44A19D13548078F56AFB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DDCB09DFE04747C5ADC0C5F95C1B9DE2"
@@ -2504,28 +2065,6 @@
                                                     }
                                                 }
                                             }
-                                            "{9EF0B969-E518-4E46-987F-47570745A589}:_3A426C152FD64C5D98647147876200CF"
-                                            {
-                                            "Name" = "8:2021"
-                                            "AlwaysCreate" = "11:FALSE"
-                                            "Condition" = "8:"
-                                            "Transitive" = "11:FALSE"
-                                            "Property" = "8:_790A2DFFDDCD4CBDB9CCA121B37BE867"
-                                                "Folders"
-                                                {
-                                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DE4B075D032D44A19D13548078F56AFB"
-                                                    {
-                                                    "Name" = "8:Vyssuals"
-                                                    "AlwaysCreate" = "11:FALSE"
-                                                    "Condition" = "8:"
-                                                    "Transitive" = "11:FALSE"
-                                                    "Property" = "8:_8A3188EB24BB42A6AF3371CBB8F3797F"
-                                                        "Folders"
-                                                        {
-                                                        }
-                                                    }
-                                                }
-                                            }
                                             "{9EF0B969-E518-4E46-987F-47570745A589}:_588876F31D3A4F93A9B5E354E586468D"
                                             {
                                             "Name" = "8:2022"
@@ -2618,7 +2157,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Vyssuals Revit Connector"
         "ProductCode" = "8:{8D35FB6F-60D5-42F9-B5A2-D50837D33B67}"
-        "PackageCode" = "8:{CC42C7F1-6A9D-4C2B-BEDD-27D319489A1E}"
+        "PackageCode" = "8:{0FC4E08B-31B4-45FD-95DB-C549ECA9D3C0}"
         "UpgradeCode" = "8:{B0412069-7C9C-47D6-BD44-D6B8ECC12173}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
