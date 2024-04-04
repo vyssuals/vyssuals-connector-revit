@@ -59,10 +59,10 @@ namespace Vyssuals.ConnectorRevit
             var visibleElementIds = ElementProcessor.GetVisibleElementIds();
 
             // get the difference between visible elements and ElementProcessor.Elements. treat all invisible elements as deleted
-            deletedElementIds.UnionWith(ElementProcessor.Elements.Select(x => x.id).Except(visibleElementIds.Select(x => x.ToString())).Select(x => new ElementId(long.Parse(x))));
+            deletedElementIds.UnionWith(ElementProcessor.Elements.Select(x => x.id).Except(visibleElementIds.Select(x => x.ToString())).Select(x => ElementIdHelper.CreateElementId(x)));
 
             // get the difference between visible elements and ElementProcessor.Elements. treat all items in visibleElements that are not in ElementProcessor.Elements as added
-            addedElementIds.UnionWith(visibleElementIds.Except(ElementProcessor.Elements.Select(x => new ElementId(long.Parse(x.id)))));
+            addedElementIds.UnionWith(visibleElementIds.Except(ElementProcessor.Elements.Select(x => ElementIdHelper.CreateElementId(x.id))));
 
             modifiedElementIds.ExceptWith(deletedElementIds);
             modifiedElementIds.ExceptWith(addedElementIds);

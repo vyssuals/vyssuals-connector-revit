@@ -84,7 +84,7 @@ namespace Vyssuals.ConnectorRevit
                     )
 
                 };
-                var message = new WebSocketMessage(timestamp, MessageType.Data, payload);
+                var message = new WebSocketMessage(timestamp, MessageType.Data, App.DocumentName, payload);
                 Task.Run(() => _webSocketManager.client.SendMessageAsync(message));
             };
 
@@ -97,11 +97,6 @@ namespace Vyssuals.ConnectorRevit
                 await _webSocketManager.StartAsync();
                 IsLoading = false;
             });
-
-            //while (!_webSocketManager.client.IsConnected)
-            //{
-            //    Debug.WriteLine("Waiting for connection...");
-            //}
         }
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)

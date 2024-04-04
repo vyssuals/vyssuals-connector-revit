@@ -29,14 +29,14 @@ namespace Vyssuals.ConnectorRevit
         [JsonConverter(typeof(PayloadConverter))]
         public Payload payload { get; set; }
 
-        public WebSocketMessage(string timestamp, string type, Payload payload)
+        public WebSocketMessage(string timestamp, string type, string senderName, Payload payload)
         {
             this.type = type;
             this.timestamp = timestamp;
             this.version = "1.0";
             this.sender = "Revit";
             this.senderVersion = App.RevitVersion;
-            this.senderName = App.DocumentName;
+            this.senderName = senderName;
             this.payload = payload;
         }
 

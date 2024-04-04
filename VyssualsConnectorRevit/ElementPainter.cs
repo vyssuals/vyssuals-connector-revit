@@ -102,7 +102,7 @@ namespace Vyssuals.ConnectorRevit
             List<ElementId> ids = new List<ElementId>();
             foreach (string id in elementIds)
             {
-                ids.Add(new ElementId(long.Parse(id)));
+                ids.Add(ElementIdHelper.CreateElementId(id));
             }
             return ids;
         }

@@ -139,7 +139,7 @@ namespace Vyssuals.ConnectorRevit
             if (webSocket.State == WebSocketState.Open)
             {
                 string timestamp = TimestampHelper.Now();
-                WebSocketMessage message = new WebSocketMessage(timestamp, MessageType.Disconnect, new DataPayload());
+                WebSocketMessage message = new WebSocketMessage(timestamp, MessageType.Disconnect, App.DocumentName, new DataPayload());
 
                 var buffer = Encoding.UTF8.GetBytes(message.SerializeToJson());
                 var segment = new ArraySegment<byte>(buffer);
