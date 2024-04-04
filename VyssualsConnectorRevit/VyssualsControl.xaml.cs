@@ -154,7 +154,7 @@ namespace Vyssuals.ConnectorRevit
 
         public void OnWebAppClick(object sender, EventArgs e)
         {
-            Process.Start("http://localhost:5173/");
+            Process.Start("https://vyssuals.com/");
         }
 
         private void StopPlugin(object sender, RoutedEventArgs e)
