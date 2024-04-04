@@ -19,6 +19,8 @@ namespace Vyssuals.ConnectorRevit
         {
             get
             {
+                if (webSocket == null)
+                    return false;
                 return webSocket.State == WebSocketState.Open;
             }
         }

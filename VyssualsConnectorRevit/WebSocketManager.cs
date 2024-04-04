@@ -32,6 +32,9 @@ namespace Vyssuals.ConnectorRevit
                 this.server = new WebSocketServer();
                 Task.Run(() => this.server.RunServerAsync(this.serverUrl, this.cts.Token));
 
+                // Wait for the server to start
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
                 bool clientConnected = false;
                 int maxAttempts = 10;
                 int attempt = 1;
@@ -45,7 +48,8 @@ namespace Vyssuals.ConnectorRevit
 
             if (this.client.IsConnected)
             {
-                await this.client.ReceiveMessagesAsync(CancellationToken.None);
+                Debug.WriteLine("wsManger: Client connected to server, awaiting message");
+                Task.Run(() => this.client.ReceiveMessagesAsync(CancellationToken.None));
             }
         }
 

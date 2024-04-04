@@ -45,8 +45,6 @@ namespace Vyssuals.ConnectorRevit
 
         public VyssualsControl(ElementSynchronizer synchronizer)
         {
-            InitializeComponent();
-            updateTextBox.Text = "<Update Name>";
 
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
@@ -76,6 +74,14 @@ namespace Vyssuals.ConnectorRevit
                 var message = new WebSocketMessage(timestamp, MessageType.Data, payload);
                 Task.Run(() => _webSocketManager.client.SendMessageAsync(message));
             };
+
+            while (!_webSocketManager.client.IsConnected)
+            {
+                Debug.WriteLine("Waiting for connection...");
+            }
+
+            InitializeComponent();
+            updateTextBox.Text = "<Update Name>";
         }
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
