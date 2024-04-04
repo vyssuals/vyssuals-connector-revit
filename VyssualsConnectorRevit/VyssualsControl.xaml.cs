@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +37,20 @@ namespace Vyssuals.ConnectorRevit
                 }
             }
         }
+        private bool _isLoading = false;    
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            set
+            {
+                if (_isLoading != value)
+                {
+                    _isLoading = value;
+                    OnPropertyChanged(nameof(IsLoading));
+                }
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -45,14 +60,12 @@ namespace Vyssuals.ConnectorRevit
 
         public VyssualsControl(ElementSynchronizer synchronizer)
         {
-
             string clientUrl = "ws://localhost:8184";
             string severUrl = "http://localhost:8184/";
             this.ElementSynchronizer = synchronizer;
             this._webSocketManager = new WebSocketManager(clientUrl, severUrl);
             this._webSocketManager.client.MessageReceived += WebSocketClient_MessageReceived;
             this.Closing += VyssualsControl_Closing;
-            Task.Run(() => _webSocketManager.StartAsync());
 
             this.ElementSynchronizer.ElementsChanged += (sender, e) =>
             {
@@ -75,13 +88,20 @@ namespace Vyssuals.ConnectorRevit
                 Task.Run(() => _webSocketManager.client.SendMessageAsync(message));
             };
 
-            while (!_webSocketManager.client.IsConnected)
-            {
-                Debug.WriteLine("Waiting for connection...");
-            }
-
             InitializeComponent();
             updateTextBox.Text = "<Update Name>";
+
+            IsLoading = true;
+            Task.Run(async () =>
+            {
+                await _webSocketManager.StartAsync();
+                IsLoading = false;
+            });
+
+            //while (!_webSocketManager.client.IsConnected)
+            //{
+            //    Debug.WriteLine("Waiting for connection...");
+            //}
         }
 
         private void HandleSendDataClicked(object sender, RoutedEventArgs e)
@@ -112,6 +132,7 @@ namespace Vyssuals.ConnectorRevit
 
         private void WebSocketClient_MessageReceived(WebSocketMessage message)
         {
+            if (message.senderName != App.DocumentName) return;
             switch (message.type)
             {
                 case MessageType.Color:

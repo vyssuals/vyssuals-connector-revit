@@ -57,6 +57,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoading, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="TransparentButtonStyle" TargetType="Button">
@@ -131,6 +136,27 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoading, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" >
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsLoading, RelativeSource={RelativeSource AncestorType=Window}}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
     </Window.Resources>
@@ -138,6 +164,7 @@
     
     <Border Background="Transparent"  Padding="20">
         <Border Background="White" CornerRadius="10" Effect="{StaticResource ShadowEffect}" Opacity="50">
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -150,10 +177,14 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
                 <Label Content="Vyssuals" HorizontalAlignment="Center" FontSize="29" Grid.Row="1" FontWeight="Medium" />
+                
                 <ToggleButton x:Name="syncButton" Content="Auto Sync" Style="{StaticResource AutoSyncButtonStyle}" Grid.Row="3" Checked="SyncButton_Checked" Unchecked="SyncButton_Unchecked"/>
+                
                 <Button x:Name="sendButton" Content="Update Data" Click="HandleSendDataClicked" Style="{StaticResource GradientButtonStyle}" Grid.Row="4" 
                     IsEnabled="{Binding AllowManualSync, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                
                 <TextBox x:Name="updateTextBox" Grid.Row="5" Margin="20 5 " Padding="5" TextAlignment="Center" Width="120">
                     <TextBox.Template>
                         <ControlTemplate TargetType="{x:Type TextBox}">
@@ -166,9 +197,13 @@
                         </ControlTemplate>
                     </TextBox.Template>
                 </TextBox>
+                
                 <Button x:Name="stopButton" Content="Disconnect" Click="StopPlugin" Style="{StaticResource TransparentButtonStyle}" Grid.Row="7" />
-
+                
                 <Button x:Name="webAppButton" Content="Show Vyssuals" Click="OnWebAppClick" Style="{StaticResource TransparentButtonStyle}" Grid.Row="6" />
+                
+                <TextBlock Text="Building Connection..." Grid.Row="3" />
+                <TextBlock Text="Just Keep Swimming... " Grid.Row="4" />
 
             </Grid>
         </Border>
